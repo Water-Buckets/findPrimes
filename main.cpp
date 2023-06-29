@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     {
         usrInput();
     }
-    else if (argc ==2 && (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' && argv[1][3] == 'l' && argv[1][4] == 'p')){ //any simplified version of this line? I tried using strcmp but it didn't work
+    else if (argc ==2 && (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' && argv[1][3] == 'l' && argv[1][4] == 'p')){
         std::cout << "Usage: findprimes [n] [m]" << std::endl;
         std::cout << "Help findPrimes -help" << std::endl;
         std::cout << "(if you're using Windows than replace findprimes with findprimes.exe)" << std::endl;
