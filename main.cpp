@@ -30,6 +30,8 @@ int main(int argc, char* argv[])
     }
     else if (argc ==2 && (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' && argv[1][3] == 'l' && argv[1][4] == 'p')){ //any simplified version of this line? I tried using strcmp but it didn't work
         std::cout << "Usage: findprimes [n] [m]" << std::endl;
+        std::cout << "Help findPrimes -help" << std::endl;
+        std::cout << "(if you're using Windows than replace findprimes with findprimes.exe)" << std::endl;
         std::cout << "n: a positive integer" << std::endl;
         std::cout << "m: a character in {a, b, c}" << std::endl;
         std::cout << "a: Trial Division" << std::endl;
