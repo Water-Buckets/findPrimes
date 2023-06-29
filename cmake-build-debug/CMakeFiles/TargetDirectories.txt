@@ -1,0 +1,3 @@
+D:/code/findPrimes/cmake-build-debug/CMakeFiles/findPrimes.dir
+D:/code/findPrimes/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/code/findPrimes/cmake-build-debug/CMakeFiles/rebuild_cache.dir

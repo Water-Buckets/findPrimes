@@ -1,0 +1,16 @@
+# ninja log v5
+3	1078	7096984918731551	build.ninja	d52bad8571b7e6bd
+0	869	7096624512220998	CMakeFiles/findPrimes.dir/main.cpp.obj	3f3344f2259955f1
+871	1078	7096624514292528	findPrimes.exe	7e150d17c8f81ddf
+23	223	7097080704501950	CMakeFiles/findPrimes.dir/primes.cpp.obj	8c8da24308fa9640
+8	373	7097080706016849	CMakeFiles/findPrimes.dir/main.cpp.obj	3f3344f2259955f1
+35	390	7097080706183708	CMakeFiles/findPrimes.dir/input.cpp.obj	bc55ac9fc09d8782
+16	444	7097080706713619	CMakeFiles/findPrimes.dir/utilities.cpp.obj	d3da409ae4009c6c
+444	572	7097080707976140	findPrimes.exe	2b6f7b01c9e40656
+9	1054	7097153171097711	CMakeFiles/findPrimes.dir/primes.cpp.obj	8c8da24308fa9640
+3	1062	7097153171197261	CMakeFiles/findPrimes.dir/main.cpp.obj	3f3344f2259955f1
+21	1063	7097153171207275	CMakeFiles/findPrimes.dir/input.cpp.obj	bc55ac9fc09d8782
+15	1073	7097153171302398	CMakeFiles/findPrimes.dir/utilities.cpp.obj	d3da409ae4009c6c
+1074	1173	7097153172267563	findPrimes.exe	2b6f7b01c9e40656
+3	975	7097155010647901	CMakeFiles/findPrimes.dir/utilities.cpp.obj	d3da409ae4009c6c
+975	1066	7097155011545068	findPrimes.exe	2b6f7b01c9e40656
