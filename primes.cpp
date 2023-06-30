@@ -35,7 +35,7 @@ std::vector<long long> eratosthenesSieve(long long n)
 {
     std::vector<bool> isPrime(n + 1, true); // 创建一个大小为n+1的bool数组，初始化为true
 
-    for (long long i = 2; i <= n * n; i++) // 从2循环到sqrt(n)
+    for (long long i = 2; i * i<= n; i++) // 从2循环到sqrt(n)
     {
         if (isPrime[i]) // 如果i是素数
         {
