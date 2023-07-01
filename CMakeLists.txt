@@ -3,5 +3,7 @@ project(findPrimes)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(findPrimes main.cpp primes.cpp primes.h utilities.cpp utilities.h input.h input.cpp)
+add_executable(findPrimes main.cpp primes.cpp primes.h utilities.cpp utilities.h input.h input.cpp
+        main.h)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

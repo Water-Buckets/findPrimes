@@ -1,0 +1,26 @@
+[
+{
+  "directory": "D:/code/findPrimes/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.18\\bin\\mingw\\bin\\G__~1.EXE -g -fdiagnostics-color=always -o CMakeFiles\\findPrimes.dir\\main.cpp.obj -c D:\\code\\findPrimes\\main.cpp",
+  "file": "D:\\code\\findPrimes\\main.cpp",
+  "output": "CMakeFiles\\findPrimes.dir\\main.cpp.obj"
+},
+{
+  "directory": "D:/code/findPrimes/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.18\\bin\\mingw\\bin\\G__~1.EXE -g -fdiagnostics-color=always -o CMakeFiles\\findPrimes.dir\\primes.cpp.obj -c D:\\code\\findPrimes\\primes.cpp",
+  "file": "D:\\code\\findPrimes\\primes.cpp",
+  "output": "CMakeFiles\\findPrimes.dir\\primes.cpp.obj"
+},
+{
+  "directory": "D:/code/findPrimes/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.18\\bin\\mingw\\bin\\G__~1.EXE -g -fdiagnostics-color=always -o CMakeFiles\\findPrimes.dir\\utilities.cpp.obj -c D:\\code\\findPrimes\\utilities.cpp",
+  "file": "D:\\code\\findPrimes\\utilities.cpp",
+  "output": "CMakeFiles\\findPrimes.dir\\utilities.cpp.obj"
+},
+{
+  "directory": "D:/code/findPrimes/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.18\\bin\\mingw\\bin\\G__~1.EXE -g -fdiagnostics-color=always -o CMakeFiles\\findPrimes.dir\\input.cpp.obj -c D:\\code\\findPrimes\\input.cpp",
+  "file": "D:\\code\\findPrimes\\input.cpp",
+  "output": "CMakeFiles\\findPrimes.dir\\input.cpp.obj"
+}
+]

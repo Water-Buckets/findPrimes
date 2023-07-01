@@ -3,31 +3,24 @@
 #include "primes.h"
 
 
-int main(int argc, char* argv[])
-{
-    if (argc == 3)
-    {
-        if (isNumeric(argv[1]))
-        {
+int main(int argc, char* argv[]){
+    if (argc == 3){
+        if (isNumeric(argv[1])){
             long long n = std::stoll(argv[1]);
             char m = argv[2][0];
-            if (n <= 1 || !(m=='a'|| m == 'b' || m == 'c'))
-            {
+            if (n <= 1 || !(m=='a'|| m == 'b' || m == 'c')){
                 std::cout << "Invalid input." << std::endl;
                 return 1;
             }
             argInput(n,m);
         }
-        else
-        {
+        else{
             std::cout << "Invalid input." << std::endl;
             return 1;
         }
     }
     else if (argc == 1)
-    {
-        usrInput();
-    }
+    usrInput();
     else if (argc ==2 && (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' && argv[1][3] == 'l' && argv[1][4] == 'p')){
         std::cout << "Usage: findprimes [n] [m]" << std::endl;
         std::cout << "Help findPrimes -help" << std::endl;

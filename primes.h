@@ -1,13 +1,9 @@
-//
-// Created by ASUS on 2023/6/28.
-//
-
 #ifndef FINDPRIMES_PRIMES_H
 #define FINDPRIMES_PRIMES_H
 
 #pragma once
 
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 
 
 std::vector<long long> trialDivision(long long n);
