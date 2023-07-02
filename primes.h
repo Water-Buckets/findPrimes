@@ -9,9 +9,9 @@
 std::vector<long long> trialDivision(long long n);
 std::vector<long long> eratosthenesSieve(long long n);
 std::vector<long long> eulerSieve(long long n);
-
-int usrInput();
-int argInput(long long n, char m);
+std::vector<long long> sundaramSieve(long long n);
+std::vector<long long> atkinSieve(long long n);
+std::vector<long long> incrementalSieve(long long n;
 
 
 
