@@ -1,4 +1,0 @@
-"C:\Program Files\JetBrains\CLion 232.8296.18\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 232.8296.18/bin/ninja/win/x64/ninja.exe" -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON -G Ninja -S D:\code\findPrimes -B D:\code\findPrimes\cmake-build-debug
--- Configuring done (0.1s)
--- Generating done (0.0s)
--- Build files have been written to: D:/code/findPrimes/cmake-build-debug
