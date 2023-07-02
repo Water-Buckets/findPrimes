@@ -1,3 +1,4 @@
 /.fleet/
 /.idea/
 /.cache/
+/cmake-build-debug/

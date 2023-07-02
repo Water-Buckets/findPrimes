@@ -11,7 +11,8 @@ std::vector<long long> eratosthenesSieve(long long n);
 std::vector<long long> eulerSieve(long long n);
 std::vector<long long> sundaramSieve(long long n);
 std::vector<long long> atkinSieve(long long n);
-std::vector<long long> incrementalSieve(long long n;
+std::vector<long long> incrementalSieve(long long n);
+std::vector<long long> wheelSieve(long long n);
 
 
 

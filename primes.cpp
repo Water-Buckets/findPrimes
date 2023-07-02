@@ -101,3 +101,16 @@ std::vector<long long> incrementalSieve(long long n) {
     }
     return primes;
 }
+
+std::vector<long long> wheelSieve(long long n) {
+    std::vector<long long> primes;
+    std::vector<bool> sieve(n + 1, true);
+    for (long long p = 2; p <= n; p++) {
+        if (sieve[p]) {
+            primes.push_back(p);
+            for (long long i = p * p; i <= n; i += p * 2)
+                sieve[i] = false;
+        }
+    }
+    return primes;
+}

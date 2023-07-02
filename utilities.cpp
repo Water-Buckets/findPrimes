@@ -30,7 +30,14 @@ std::vector<long long> calculatePrimes(long long n, char m) {
     } else if (m == 'e') {
         std::cout << "Using Sieve of Atkin" << std::endl;
         return atkinSieve(n);
-    } else {
+    } else if (m == 'f') {
+        std::cout << "Using Incremental Sieve" << std::endl;
+        return incrementalSieve(n);
+    } else if (m == 'g') {
+        std::cout << "Using Wheel Sieve" << std::endl;
+        return wheelSieve(n);
+    }
+    else {
         std::cout << "Invalid input." << std::endl;
         std::exit(1);
     }
