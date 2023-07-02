@@ -2,3 +2,4 @@
 /.idea/
 /.cache/
 /cmake-build-debug/
+/out/

@@ -1,6 +1,5 @@
 #include "utilities.h"
 #include "input.h"
-#include "primes.h"
 
 
 int main(int argc, char *argv[]) {
