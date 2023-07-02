@@ -22,13 +22,13 @@ int usrInput() {
             return 1;
         }
         std::cout << "Choose an algorithm: ";
-//        std::cout << "a stand for Trial Division" << std::endl;
-//        std::cout << "b stand for Sieve of Eratosthenes" << std::endl;
-//        std::cout << "c stand for Sieve of Euler" << std::endl;
-//        std::cout << "d stand for Sieve of Sundaram" << std::endl;
-//        std::cout << "e stand for Sieve of Atkin" << std::endl;
-//        std::cout << "f stand for Incremental Sieve" << std::endl;
-//        std::cout << "g stand for Wheel Sieve" << std::endl;
+        std::cout << "a stand for Trial Division" << std::endl;
+        std::cout << "b stand for Sieve of Eratosthenes" << std::endl;
+        std::cout << "c stand for Sieve of Euler" << std::endl;
+        std::cout << "d stand for Sieve of Sundaram" << std::endl;
+        std::cout << "e stand for Sieve of Atkin" << std::endl;
+        std::cout << "f stand for Incremental Sieve" << std::endl;
+        std::cout << "g stand for Wheel Sieve" << std::endl;
         if (!(std::cin >> m)) {
             std::cout << "Invalid input." << std::endl;
             return 1;
