@@ -15,31 +15,58 @@ std::pair<std::vector<long long>, long long> calcAndPrintDuration(long long n, c
 
 
 std::vector<long long> calculatePrimes(long long n, char m) {
-    if (m == 'a') {
-        std::cout << "Using Trial Division" << std::endl;
-        return trialDivision(n);
-    } else if (m == 'b') {
-        std::cout << "Using Sieve of Eratosthenes" << std::endl;
-        return eratosthenesSieve(n);
-    } else if (m == 'c') {
-        std::cout << "Using Sieve of Euler" << std::endl;
-        return eulerSieve(n);
-    } else if (m == 'd')  {
-        std::cout << "Using Sieve of Sundaram" << std::endl;
-        return sundaramSieve(n);
-    } else if (m == 'e') {
-        std::cout << "Using Sieve of Atkin" << std::endl;
-        return atkinSieve(n);
-    } else if (m == 'f') {
-        std::cout << "Using Incremental Sieve" << std::endl;
-        return incrementalSieve(n);
-    } else if (m == 'g') {
-        std::cout << "Using Wheel Sieve" << std::endl;
-        return wheelSieve(n);
-    }
-    else {
-        std::cout << "Invalid input." << std::endl;
-        std::exit(1);
+//    if (m == 'a') {
+//        std::cout << "Using Trial Division" << std::endl;
+//        return trialDivision(n);
+//    } else if (m == 'b') {
+//        std::cout << "Using Sieve of Eratosthenes" << std::endl;
+//        return eratosthenesSieve(n);
+//    } else if (m == 'c') {
+//        std::cout << "Using Sieve of Euler" << std::endl;
+//        return eulerSieve(n);
+//    } else if (m == 'd')  {
+//        std::cout << "Using Sieve of Sundaram" << std::endl;
+//        return sundaramSieve(n);
+//    } else if (m == 'e') {
+//        std::cout << "Using Sieve of Atkin" << std::endl;
+//        return atkinSieve(n);
+//    } else if (m == 'f') {
+//        std::cout << "Using Incremental Sieve" << std::endl;
+//        return incrementalSieve(n);
+//    } else if (m == 'g') {
+//        std::cout << "Using Wheel Sieve" << std::endl;
+//        return wheelSieve(n);
+//    }
+//    else {
+//        std::cout << "Invalid input." << std::endl;
+//        std::exit(1);
+//    }
+//改用switch语句
+    switch (m) {
+        case 'a':
+            std::cout << "Using Trial Division" << std::endl;
+            return trialDivision(n);
+        case 'b':
+            std::cout << "Using Sieve of Eratosthenes" << std::endl;
+            return eratosthenesSieve(n);
+        case 'c':
+            std::cout << "Using Sieve of Euler" << std::endl;
+            return eulerSieve(n);
+        case 'd':
+            std::cout << "Using Sieve of Sundaram" << std::endl;
+            return sundaramSieve(n);
+        case 'e':
+            std::cout << "Using Sieve of Atkin" << std::endl;
+            return atkinSieve(n);
+        case 'f':
+            std::cout << "Using Incremental Sieve" << std::endl;
+            return incrementalSieve(n);
+        case 'g':
+            std::cout << "Using Wheel Sieve" << std::endl;
+            return wheelSieve(n);
+        default:
+            std::cout << "Invalid input." << std::endl;
+            std::exit(1);
     }
 }
 
