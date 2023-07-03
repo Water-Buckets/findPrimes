@@ -1,6 +1,4 @@
-#include "input.h"
-#include "primes.h"
-#include "utilities.h"
+#include "main.h"
 
 int argInput(long long n, char m) {
     auto result = calcAndPrintDuration(n, m);

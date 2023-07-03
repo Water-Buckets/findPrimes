@@ -1,4 +1,4 @@
-#include "primes.h"
+#include "main.h"
 
 std::vector<long long> trialDivision(long long n) {
   std::vector<long long> primes;
