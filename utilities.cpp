@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-long long calcAndPrintDuration(const long long &n, char &m, std::vector<long long> &primes) {
+long long calcAndPrintDuration(const long long &n, const char &m, std::vector<long long> &primes) {
     auto start = std::chrono::steady_clock::now();
     calculatePrimes(n, m, primes);
     auto end = std::chrono::steady_clock::now();
@@ -13,56 +13,42 @@ long long calcAndPrintDuration(const long long &n, char &m, std::vector<long lon
 }
 
 
-void calculatePrimes(const long long &n, char &m, std::vector<long long> &primes) {
+void calculatePrimes(const long long &n, const char &m, std::vector<long long> &primes) {
     switch (m) {
         case 'a':
             std::clog << "Using Trial Division" << std::endl;
-            trialDivision(n,primes);
+            trialDivision(n, primes);
             break;
         case 'b':
             std::clog << "Using Sieve of Eratosthenes" << std::endl;
-            eratosthenesSieve(n,primes);
+            eratosthenesSieve(n, primes);
             break;
         case 'c':
             std::clog << "Using Sieve of Euler" << std::endl;
-            eulerSieve(n,primes);
+            eulerSieve(n, primes);
             break;
         case 'd':
             std::clog << "Using Sieve of Sundaram" << std::endl;
-            sundaramSieve(n,primes);
+            sundaramSieve(n, primes);
             break;
         case 'e':
             std::clog << "Using Sieve of Atkin" << std::endl;
-            atkinSieve(n,primes);
+            atkinSieve(n, primes);
             break;
         case 'f':
             std::clog << "Using Incremental Sieve" << std::endl;
-            incrementalSieve(n,primes);
+            incrementalSieve(n, primes);
             break;
         case 'g':
             std::clog << "Using Wheel Sieve" << std::endl;
-            wheelSieve(n,primes);
+            wheelSieve(n, primes);
             break;
         default:
             throw std::invalid_argument("Invalid input.");
     }
 }
 
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "readability-use-anyofallof"
-
-bool isNumeric(const std::string &str) {
-    for (char c: str) {
-        if (!std::isdigit(c)) return false;
-    }
-    return true;
-}
-
-#pragma clang diagnostic pop
-
-
-long long outputToFile(const std::vector<long long> &primes,const long long &n) {
+long long outputToFile(const std::vector<long long> &primes, const long long &n) {
 
     auto startWrite = std::chrono::steady_clock::now();
     std::ofstream outfile("primes.txt");
