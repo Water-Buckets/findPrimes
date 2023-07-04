@@ -3,3 +3,9 @@
 /.cache/
 /cmake-build-debug/
 /out/
+/.vs/
+/findPrimes.sln
+/findPrimes.vcxproj
+/findPrimes.vcxproj.filters
+/findPrimes.vcxproj.user
+/x64/
