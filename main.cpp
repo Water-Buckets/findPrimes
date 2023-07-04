@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
               << std::endl;
     std::cout << "If the file does not exist, the program will create it."
               << std::endl;
-    std::cout << "If the program is run with the -help flag, the program will "
+    std::cout << "If the program is run with the -h flag, the program will "
                  "output this message."
               << std::endl;
     return 0;
