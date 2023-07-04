@@ -4,11 +4,10 @@
 #pragma once
 #include "bits/stdc++.h"
 
-std::pair<std::vector<long long>, long long> calcAndPrintDuration(long long n,char m);
-void printTotalDuration(long long duration, long long durationWrite);
-long long outputToFile(const std::vector<long long>& primes, long long n);
+long long calcAndPrintDuration(const long long &n, char &m, std::vector<long long> &primes);
+long long outputToFile(const std::vector<long long> &primes,const long long &n);
 bool isNumeric(const std::string& str);
-std::vector<long long> calculatePrimes(long long n,char m);
+void calculatePrimes(const long long &n, char &m, std::vector<long long> &primes);
 
 
 #endif //FINDPRIMES_UTILITIES_H

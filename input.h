@@ -3,7 +3,7 @@
 
 #include "bits/stdc++.h"
 
-int argInput(long long n, char m);
-int usrInput();
+void argInput(const long long &n, char &m);
+void usrInput();
 
 #endif //FINDPRIMES_INPUT_H

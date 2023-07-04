@@ -6,13 +6,13 @@
 #include "bits/stdc++.h"
 
 
-std::vector<long long> trialDivision(long long n);
-std::vector<long long> eratosthenesSieve(long long n);
-std::vector<long long> eulerSieve(long long n);
-std::vector<long long> sundaramSieve(long long n);
-std::vector<long long> atkinSieve(long long n);
-std::vector<long long> incrementalSieve(long long n);
-std::vector<long long> wheelSieve(long long n);
+void trialDivision(const long long &n, std::vector<long long> &primes);
+void eratosthenesSieve(const long long &n, std::vector<long long> &primes);
+void eulerSieve(const long long &n, std::vector<long long> &primes);
+void sundaramSieve(const long long &n, std::vector<long long> &primes);
+void atkinSieve(const long long &n, std::vector<long long> &primes);
+void incrementalSieve(const long long &n, std::vector<long long> &primes);
+void wheelSieve(const long long &n, std::vector<long long> &primes);
 
 
 

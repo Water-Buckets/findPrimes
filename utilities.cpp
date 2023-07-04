@@ -1,51 +1,53 @@
 #include "main.h"
 
 
-std::pair<std::vector<long long>, long long> calcAndPrintDuration(long long n, char m) {
+long long calcAndPrintDuration(const long long &n, char &m, std::vector<long long> &primes) {
     auto start = std::chrono::steady_clock::now();
-    auto primes = calculatePrimes(n, m);
+    calculatePrimes(n, m, primes);
     auto end = std::chrono::steady_clock::now();
     auto diff = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
     long long duration = diff.count();
-    std::cout << "Found " << primes.size() << " primes in " << double(duration) / 1000000000 << " seconds."
+    std::clog << "Found " << primes.size() << " primes in " << double(duration) / 1000000000 << " seconds."
               << std::endl;
-    return std::make_pair(primes, duration);
+    return duration;
 }
 
 
-std::vector<long long> calculatePrimes(long long n, char m) {
+void calculatePrimes(const long long &n, char &m, std::vector<long long> &primes) {
     switch (m) {
         case 'a':
-            std::cout << "Using Trial Division" << std::endl;
-            return trialDivision(n);
+            std::clog << "Using Trial Division" << std::endl;
+            trialDivision(n,primes);
+            break;
         case 'b':
-            std::cout << "Using Sieve of Eratosthenes" << std::endl;
-            return eratosthenesSieve(n);
+            std::clog << "Using Sieve of Eratosthenes" << std::endl;
+            eratosthenesSieve(n,primes);
+            break;
         case 'c':
-            std::cout << "Using Sieve of Euler" << std::endl;
-            return eulerSieve(n);
+            std::clog << "Using Sieve of Euler" << std::endl;
+            eulerSieve(n,primes);
+            break;
         case 'd':
-            std::cout << "Using Sieve of Sundaram" << std::endl;
-            return sundaramSieve(n);
+            std::clog << "Using Sieve of Sundaram" << std::endl;
+            sundaramSieve(n,primes);
+            break;
         case 'e':
-            std::cout << "Using Sieve of Atkin" << std::endl;
-            return atkinSieve(n);
+            std::clog << "Using Sieve of Atkin" << std::endl;
+            atkinSieve(n,primes);
+            break;
         case 'f':
-            std::cout << "Using Incremental Sieve" << std::endl;
-            return incrementalSieve(n);
+            std::clog << "Using Incremental Sieve" << std::endl;
+            incrementalSieve(n,primes);
+            break;
         case 'g':
-            std::cout << "Using Wheel Sieve" << std::endl;
-            return wheelSieve(n);
+            std::clog << "Using Wheel Sieve" << std::endl;
+            wheelSieve(n,primes);
+            break;
         default:
-            std::cout << "Invalid input." << std::endl;
-            std::exit(1);
+            throw std::invalid_argument("Invalid input.");
     }
 }
 
-
-void printTotalDuration(long long duration, long long durationWrite) {
-    std::cout << "Total time elapsed: " << double(duration + durationWrite) / 1000000000 << " seconds." << std::endl;
-}
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "readability-use-anyofallof"
@@ -60,14 +62,11 @@ bool isNumeric(const std::string &str) {
 #pragma clang diagnostic pop
 
 
-long long outputToFile(const std::vector<long long> &primes, long long n) {
+long long outputToFile(const std::vector<long long> &primes,const long long &n) {
 
     auto startWrite = std::chrono::steady_clock::now();
     std::ofstream outfile("primes.txt");
-    if (!outfile.is_open()) {
-        std::cout << "Failed to open file." << std::endl;
-        return 1;
-    }
+    if (!outfile.is_open()) throw std::runtime_error("Failed to open file.");
 
     outfile << "Primes less than or equal to " << n << ": ";
     for (auto p: primes) {
@@ -77,6 +76,6 @@ long long outputToFile(const std::vector<long long> &primes, long long n) {
     auto endWrite = std::chrono::steady_clock::now();
     auto diffWrite = std::chrono::duration_cast<std::chrono::nanoseconds>(endWrite - startWrite);
     long long durationWrite = diffWrite.count();
-    std::cout << "Time elapsed writing to file: " << double(durationWrite) / 1000000000 << " seconds." << std::endl;
+    std::clog << "Time elapsed writing to file: " << double(durationWrite) / 1000000000 << " seconds." << std::endl;
     return durationWrite;
 }

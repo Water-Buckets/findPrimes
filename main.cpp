@@ -5,17 +5,13 @@ int main(int argc, char *argv[]) {
     if (isNumeric(argv[1])) {
       long long n = std::stoll(argv[1]);
       char m = argv[2][0];
-      if (n <= 1) {
-        std::cout << "Invalid input." << std::endl;
-        return 1;
-      }
+      if (n <= 1) throw std::invalid_argument("n must be greater than 1.");
       argInput(n, m);
-    } else {
-      std::cout << "Invalid input." << std::endl;
-      return 1;
-    }
-  } else if (argc == 1)
+    } else throw std::invalid_argument("Invalid input.");
+  } else if (argc == 1){
     usrInput();
+    return 1;
+  }
   else if (argc == 2 &&
            (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' &&
             argv[1][3] == 'l' && argv[1][4] == 'p')) {
@@ -49,8 +45,5 @@ int main(int argc, char *argv[]) {
                  "output this message."
               << std::endl;
     return 0;
-  } else {
-    std::cout << "Invalid input." << std::endl;
-    return 1;
-  }
+  } else throw std::invalid_argument("Invalid input.");
 }
