@@ -13,8 +13,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   else if (argc == 2 &&
-           (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == 'e' &&
-            argv[1][3] == 'l' && argv[1][4] == 'p')) {
+           (argv[1][0] == '-' && argv[1][1] == 'h')) {
     std::cout << "Usage: findprimes [n] [m]" << std::endl;
     std::cout << "Help findPrimes -help" << std::endl;
     std::cout << "(if you're using Windows than replace findprimes with "
