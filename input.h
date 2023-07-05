@@ -7,7 +7,7 @@ void argInput(const long long &n, const char &m);
 
 void usrInput();
 
-void halfInput(long long &n);
+void halfInput(const long long &n);
 
 void halfInput(const char &m);
 
