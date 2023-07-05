@@ -1,14 +1,15 @@
 #include "main.h"
 
-
 int main(int argc, char *argv[]) {
     if (argc == 3) {
         if (isNumeric(argv[1])) {
             long long n = std::stoll(argv[1]);
             char m = argv[2][0];
-            if (n <= 1) throw std::invalid_argument("n must be greater than 1.");
+            if (n <= 1)
+                throw std::invalid_argument("n must be greater than 1.");
             argInput(n, m);
-        } else throw std::invalid_argument("Invalid input.");
+        } else
+            throw std::invalid_argument("Invalid input.");
     } else if (argc == 1) {
         usrInput();
         return 1;
