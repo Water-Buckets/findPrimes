@@ -28,5 +28,4 @@ inline void askForNumber(long long &n) {
 }
 
 
-
 #endif //FINDPRIMES_INPUT_H
