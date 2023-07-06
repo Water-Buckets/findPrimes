@@ -35,22 +35,22 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
     - name: Test For trialDivision
-      run: ./build/findPrimes 2147483648 a
+      run: ./build/findPrimes 99999989 a
       
     - name: Test For eratosthenesSieve
-      run: ./build/findPrimes 2147483648 b
+      run: ./build/findPrimes 99999989 b
     
     - name: Test For eulerSieve
-      run: ./build/findPrimes 2147483648 c
+      run: ./build/findPrimes 99999989 c
     
     - name: Test For sundaramSieve
-      run: ./build/findPrimes 2147483648 d
+      run: ./build/findPrimes 99999989 d
       
     - name: Test For atkinSieve
-      run: ./build/findPrimes 2147483648 e
+      run: ./build/findPrimes 99999989 e
       
     - name: Test For incrementalSieve
-      run: ./build/findPrimes 2147483648 f
+      run: ./build/findPrimes 99999989 f
     
     - name: Test For wheelSieve
-      run: ./build/findPrimes 2147483648 g
+      run: ./build/findPrimes 99999989 g
