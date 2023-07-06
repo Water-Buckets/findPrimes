@@ -8,7 +8,7 @@ void argInput(const long long &n, const char &m) {
     std::cout << "Done. Check 'primes.txt' for " << primes.size() << " results." << std::endl;
 }
 
-void halfInput(long long &n) {
+void halfInput(const long long &n) {
     char m;
     askForMethod();
     if (!(std::cin >> m)) throw std::invalid_argument("Invalid input.");
@@ -19,7 +19,6 @@ void halfInput(const char &m) {
     long long n;
     askForNumber(n);
     argInput(n, m);
-
 }
 
 void usrInput() {
