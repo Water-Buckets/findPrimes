@@ -19,7 +19,6 @@ void halfInput(const char &m) {
     long long n;
     askForNumber(n);
     argInput(n, m);
-
 }
 
 void usrInput() {
