@@ -3,38 +3,38 @@
 void trialDivision(const long long &n, std::vector<long long> &primes) {
     if (n >= 2) primes.push_back(2);
     for (long long i = 3; i <= n; i += 2) {
-        bool isPrime = true;
+        bool isPrime = false;
         for (long long p: primes) {
             if (p * p > i) break;
             if (i % p == 0) {
-                isPrime = false;
+                isPrime = true;
                 break;
             }
         }
-        if (isPrime) primes.push_back(i);
+        if (!isPrime) primes.push_back(i);
     }
 }
 
 void eratosthenesSieve(const long long &n, std::vector<long long> &primes) {
-    std::vector<bool> isPrime((n + 2) / 2, true);
-    isPrime[0] = false;
+    std::vector<bool> isPrime((n + 2) / 2, false);
+    isPrime[0] = true;
     if (n >= 2) primes.push_back(2);
     for (long long i = 3; i <= n; i += 2) {
-        if (isPrime[i / 2]) {
+        if (!isPrime[i / 2]) {
             primes.push_back(i);
-            for (long long j = i * i; j <= n; j += 2 * i) isPrime[j / 2] = false;
+            for (long long j = i * i; j <= n; j += 2 * i) isPrime[j / 2] = true;
         }
     }
 }
 
 void eulerSieve(const long long &n, std::vector<long long> &primes) {
-    std::vector<bool> isPrime(n + 1, true);
+    std::vector<bool> isPrime(n + 1, false);
     if (n >= 2) primes.push_back(2);
     for (long long i = 3; i <= n; i += 2) {
-        if (isPrime[i]) {
+        if (!isPrime[i]) {
             primes.push_back(i);
             if (i <= n / i) {
-                for (long long j = i * i; j <= n; j += i * 2) isPrime[j] = false;
+                for (long long j = i * i; j <= n; j += i * 2) isPrime[j] = true;
             }
         }
     }
@@ -73,23 +73,23 @@ void atkinSieve(const long long &n, std::vector<long long> &primes) {
 }
 
 void incrementalSieve(const long long &n, std::vector<long long> &primes) {
-    std::vector<bool> isPrime(n + 1, true);
+    std::vector<bool> isPrime(n + 1, false);
     if (n >= 2) primes.push_back(2);
     for (long long p = 3; p <= n; p += 2) {
-        if (isPrime[p]) {
+        if (!isPrime[p]) {
             primes.push_back(p);
-            for (long long i = p * p; i <= n; i += p) isPrime[i] = false;
+            for (long long i = p * p; i <= n; i += p) isPrime[i] = true;
         }
     }
 }
 
 void wheelSieve(const long long &n, std::vector<long long> &primes) {
     if (n >= 2) primes.push_back(2);
-    std::vector<bool> isPrime(n + 1, true);
+    std::vector<bool> isPrime(n + 1, false);
     for (long long p = 3; p <= n; p += 2) {
-        if (isPrime[p]) {
+        if (!isPrime[p]) {
             primes.push_back(p);
-            for (long long i = p * p; i <= n; i += p * 2) isPrime[i] = false;
+            for (long long i = p * p; i <= n; i += p * 2) isPrime[i] = true;
         }
     }
 }

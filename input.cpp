@@ -4,7 +4,7 @@ void argInput(const long long &n, const char &m) {
     std::vector<long long> primes;
     long long duration = calcAndPrintDuration(n, m, primes);
     long long durationWrite = outputToFile(primes, n);
-    std::cout << "Total time elapsed: " << double(duration + durationWrite) / 1000000000 << " seconds." << std::endl;
+    std::clog << "Total time elapsed: " << double(duration + durationWrite) / 1000000000 << " seconds." << std::endl;
     std::cout << "Done. Check 'primes.txt' for " << primes.size() << " results." << std::endl;
 }
 
