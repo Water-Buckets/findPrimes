@@ -1,0 +1,78 @@
+name: CMake-Debug
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+        run: ctest -C ${{env.BUILD_TYPE}}
+
+      - name: Test For trialDivision(multithread)
+        run: ./build/findPrimes_multiThread 16 a 99999989 primes.txt
+
+      - name: Test For eratosthenesSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 b 99999989 primes.txt
+
+      - name: Test For eulerSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 c 99999989 primes.txt
+
+      - name: Test For sundaramSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 d 99999989 primes.txt
+
+      - name: Test For atkinSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 e 99999989 primes.txt
+
+      - name: Test For incrementalSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 f 99999989 primes.txt
+
+      - name: Test For wheelSieve(multithread)
+        run: ./build/findPrimes_multiThread 16 g 99999989 primes.txt
+
+      - name: Test For trialDivision(monothread)
+        run: ./build/findPrimes_multiThread 1 a 99999989 primes.txt
+
+      - name: Test For eratosthenesSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 b 99999989 primes.txt
+
+      - name: Test For eulerSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 c 99999989 primes.txt
+
+      - name: Test For sundaramSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 d 99999989 primes.txt
+
+      - name: Test For atkinSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 e 99999989 primes.txt
+
+      - name: Test For incrementalSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 f 99999989 primes.txt
+
+      - name: Test For wheelSieve(monothread)
+        run: ./build/findPrimes_multiThread 1 g 99999989 primes.txt

@@ -1,7 +1,8 @@
+# 项目排除路径
+/cmake-build-debug/
 /.fleet/
 /.idea/
 /.cache/
-/cmake-build-debug/
 /out/
 /.vs/
 /findPrimes.sln
@@ -11,3 +12,8 @@
 /x64/
 /build/
 /.vscode/
+/.editorconfig
+/compile_commands.json
+/cmake-build-release/
+/cmake-build-debug-/
+/cmake-build-*
