@@ -1,5 +1,5 @@
-#ifndef FINDPRIMES_MULTITHREAD_PRIMES_H
-#define FINDPRIMES_MULTITHREAD_PRIMES_H
+#ifndef FINDPRIMES_PRIMES_H
+#define FINDPRIMES_PRIMES_H
 
 #pragma once
 
@@ -21,4 +21,4 @@ void incrementalSieve(const long long &n, std::vector<long long> &primes);
 
 void wheelSieve(const long long &n, std::vector<long long> &primes);
 
-#endif // FINDPRIMES_MULTITHREAD_PPRIMES_H
+#endif // FINDPRIMES_PPRIMES_H

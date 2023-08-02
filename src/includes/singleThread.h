@@ -2,8 +2,8 @@
 // Created by ASUS on 2023/7/10.
 //
 
-#ifndef FINDPRIMES_MULTITHREAD_SINGLETHREAD_H
-#define FINDPRIMES_MULTITHREAD_SINGLETHREAD_H
+#ifndef FINDPRIMES_SINGLETHREAD_H
+#define FINDPRIMES_SINGLETHREAD_H
 
 #include "utilities.h"
 #include <fstream>
@@ -65,4 +65,4 @@ void singleThread(const long long &n, const std::string &file,
                   void (*pSMethod)(const long long &n,
                                    std::vector<long long> &primes));
 
-#endif // FINDPRIMES_MULTITHREAD_SINGLETHREAD_H
+#endif // FINDPRIMES_SINGLETHREAD_H

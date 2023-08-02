@@ -36,43 +36,43 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Test For trialDivision(multithread)
-        run: ./build/findPrimes_multiThread 16 a 99999989 primes.txt
+        run: ./build/findPrimes 16 a 99999989 primes.txt
 
       - name: Test For eratosthenesSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 b 99999989 primes.txt
+        run: ./build/findPrimes 16 b 99999989 primes.txt
 
       - name: Test For eulerSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 c 99999989 primes.txt
+        run: ./build/findPrimes 16 c 99999989 primes.txt
 
       - name: Test For sundaramSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 d 99999989 primes.txt
+        run: ./build/findPrimes 16 d 99999989 primes.txt
 
       - name: Test For atkinSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 e 99999989 primes.txt
+        run: ./build/findPrimes 16 e 99999989 primes.txt
 
       - name: Test For incrementalSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 f 99999989 primes.txt
+        run: ./build/findPrimes 16 f 99999989 primes.txt
 
       - name: Test For wheelSieve(multithread)
-        run: ./build/findPrimes_multiThread 16 g 99999989 primes.txt
+        run: ./build/findPrimes 16 g 99999989 primes.txt
 
       - name: Test For trialDivision(monothread)
-        run: ./build/findPrimes_multiThread 1 a 99999989 primes.txt
+        run: ./build/findPrimes 1 a 99999989 primes.txt
 
       - name: Test For eratosthenesSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 b 99999989 primes.txt
+        run: ./build/findPrimes 1 b 99999989 primes.txt
 
       - name: Test For eulerSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 c 99999989 primes.txt
+        run: ./build/findPrimes 1 c 99999989 primes.txt
 
       - name: Test For sundaramSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 d 99999989 primes.txt
+        run: ./build/findPrimes 1 d 99999989 primes.txt
 
       - name: Test For atkinSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 e 99999989 primes.txt
+        run: ./build/findPrimes 1 e 99999989 primes.txt
 
       - name: Test For incrementalSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 f 99999989 primes.txt
+        run: ./build/findPrimes 1 f 99999989 primes.txt
 
       - name: Test For wheelSieve(monothread)
-        run: ./build/findPrimes_multiThread 1 g 99999989 primes.txt
+        run: ./build/findPrimes 1 g 99999989 primes.txt

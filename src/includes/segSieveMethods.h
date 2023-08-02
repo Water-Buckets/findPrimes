@@ -2,8 +2,8 @@
 // Created by ASUS on 2023/7/11.
 //
 
-#ifndef FINDPRIMES_MULTITHREAD_SEGSIEVEMETHODS_H
-#define FINDPRIMES_MULTITHREAD_SEGSIEVEMETHODS_H
+#ifndef FINDPRIMES_SEGSIEVEMETHODS_H
+#define FINDPRIMES_SEGSIEVEMETHODS_H
 
 #include <algorithm>
 #include <vector>
@@ -40,4 +40,4 @@ void wheelSieve(const long long &lL, const long long &uL,
                     &preSievedPrimes); // unused due to the complexity of the
                                        // Wheel Sieve algorithm
 
-#endif // FINDPRIMES_MULTITHREAD_SEGSIEVEMETHODS_H
+#endif // FINDPRIMES_SEGSIEVEMETHODS_H

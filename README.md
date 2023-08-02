@@ -1,4 +1,4 @@
-# findPrimes_multiThread
+# findPrimes
 This is a program designed to find all the prime numbers between 2 and a given number.
 
 # Usage: 
@@ -37,6 +37,6 @@ If no arguments are provided, the program will show this help.
 # Build
 Requires cmake.
 ````bash
-git clone https://github.com/Water-Buckets/findPrimes_multiThread.git && cd findPrimes_multiThread
+git clone https://github.com/Water-Buckets/findPrimes.git && cd findPrimes
 cmake -S . -B ./cmake-build && cmake --build ./cmake-build
 ````
