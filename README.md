@@ -34,3 +34,9 @@ Requires cmake.
 git clone https://github.com/Water-Buckets/findPrimes.git && cd findPrimes
 cmake -S . -B ./cmake-build && cmake --build ./cmake-build
 ````
+
+# Run
+Example:
+````bash
+findPrimes 32 c 2147483648 primes.txt
+````
