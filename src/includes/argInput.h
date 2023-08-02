@@ -8,7 +8,6 @@
 #include "multiThread.h"
 #include "segSieveMethods.h"
 #include "sieveMethods.h"
-#include "singleThread.h"
 #include <cctype>
 #include <iostream>
 
@@ -45,14 +44,8 @@ inline auto switchSMethods(const char &m)
     std::cout << "Using Sieve of Sundaram" << std::endl;
     return sundaramSieve;
   case 'e':
-    std::cout << "Using Sieve of Atkin" << std::endl;
-    return atkinSieve;
-  case 'f':
     std::cout << "Using Incremental Sieve" << std::endl;
     return incrementalSieve;
-  case 'g':
-    std::cout << "Using Wheel Sieve" << std::endl;
-    return wheelSieve;
   default:
     throw std::invalid_argument("Invalid argument.");
   }
@@ -76,12 +69,8 @@ inline auto switchMMethods(const char &m)
     return segEulerSieve;
   case 'd':
     return segSundaramSieve;
-  case 'e':
-    throw std::runtime_error("What?!");
   case 'f':
     return segIncrementalSieve;
-  case 'g':
-    throw std::runtime_error("What?!");
   default:
     throw std::invalid_argument("Invalid argument.");
   }

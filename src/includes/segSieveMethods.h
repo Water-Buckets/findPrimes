@@ -24,20 +24,20 @@ void segSundaramSieve(const long long &lL, const long long &uL,
                       std::vector<long long> &primes,
                       const std::vector<long long> &preSievedPrimes);
 
-void atkinSieve(const long long &lL, const long long &uL,
-                std::vector<long long> &primes,
-                const std::vector<long long>
-                    &preSievedPrimes); // unused due to the complexity of the
-                                       // Atkin Sieve algorithm
+//void atkinSieve(const long long &lL, const long long &uL,
+//                std::vector<long long> &primes,
+//                const std::vector<long long>
+//                    &preSievedPrimes); // unused due to the complexity of the
+//                                       // Atkin Sieve algorithm
 
 void segIncrementalSieve(const long long &lL, const long long &uL,
                          std::vector<long long> &primes,
                          const std::vector<long long> &preSievedPrimes);
 
-void wheelSieve(const long long &lL, const long long &uL,
-                std::vector<long long> &primes,
-                const std::vector<long long>
-                    &preSievedPrimes); // unused due to the complexity of the
-                                       // Wheel Sieve algorithm
+//void wheelSieve(const long long &lL, const long long &uL,
+//                std::vector<long long> &primes,
+//                const std::vector<long long>
+//                    &preSievedPrimes); // unused due to the complexity of the
+//                                       // Wheel Sieve algorithm
 
 #endif // FINDPRIMES_SEGSIEVEMETHODS_H

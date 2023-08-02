@@ -2,9 +2,9 @@ name: CMake-Debug
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "dev" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "dev" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -47,32 +47,21 @@ jobs:
       - name: Test For sundaramSieve(multithread)
         run: ./build/findPrimes 16 d 99999989 primes.txt
 
-      - name: Test For atkinSieve(multithread)
+      - name: Test For incrementalSieve(multithread)
         run: ./build/findPrimes 16 e 99999989 primes.txt
 
-      - name: Test For incrementalSieve(multithread)
-        run: ./build/findPrimes 16 f 99999989 primes.txt
-
-      - name: Test For wheelSieve(multithread)
-        run: ./build/findPrimes 16 g 99999989 primes.txt
-
-      - name: Test For trialDivision(monothread)
+      - name: Test For trialDivision(singlethread)
         run: ./build/findPrimes 1 a 99999989 primes.txt
 
-      - name: Test For eratosthenesSieve(monothread)
+      - name: Test For eratosthenesSieve(singlethread)
         run: ./build/findPrimes 1 b 99999989 primes.txt
 
-      - name: Test For eulerSieve(monothread)
+      - name: Test For eulerSieve(singlethread)
         run: ./build/findPrimes 1 c 99999989 primes.txt
 
-      - name: Test For sundaramSieve(monothread)
+      - name: Test For sundaramSieve(singlethread)
         run: ./build/findPrimes 1 d 99999989 primes.txt
 
-      - name: Test For atkinSieve(monothread)
+      - name: Test For incrementalSieve(singlethread)
         run: ./build/findPrimes 1 e 99999989 primes.txt
 
-      - name: Test For incrementalSieve(monothread)
-        run: ./build/findPrimes 1 f 99999989 primes.txt
-
-      - name: Test For wheelSieve(monothread)
-        run: ./build/findPrimes 1 g 99999989 primes.txt
