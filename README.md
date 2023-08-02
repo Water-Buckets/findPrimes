@@ -1,26 +1,42 @@
-# findPrimes
+# findPrimes_multiThread
+This is a program designed to find all the prime numbers between 2 and a given number.
 
-## Description
-This is a program that calculates all the prime numbers between 2 and a given number. It supports several different algorithms for prime number computation: Trial Division, Sieve of Eratosthenes, Sieve of Euler, Sieve of Sundaram, Sieve of Atkin, Incremental Sieve, and Wheel Sieve. The program includes error handling mechanisms to ensure correct user input, and it provides performance measures for each run.
+# Usage: 
+findprimes [threads] [method] [n] [outputFile]
 
-## Usage
-The program can be executed through the command line with the following command:
-```bash
-cmake .. && make && ./findPrimes
-```
-The user will be prompted to input a positive integer, n, which is the upper limit for prime number computation. They will also be asked to choose an algorithm for the computation, represented by the characters 'a' to 'g'.
+If threads equals 1 the program will run in singleThread mode.
+Else if threads is over 1 the program will run in multiThread mode.
+You can tell the program to use multiple threads by providing a number for threads.
+If the number of threads is invalid, the program will exit with an error.
 
-## Output
-The program outputs all prime numbers between 2 and n to a file named primes.txt. It also displays the total number of primes found and the time taken for computation and file writing.
+You can tell the program to use a specific method by providing a character for method.
+For method you can choose between 'a' 'b' 'c' 'd' 'e' 'f' 'g'.
 
-## Warning
-If n is too large, primes.txt may be too large to open in a text editor and take up a lot of space on your computer.
+a stand for Trial Division.
 
-## Dependencies
-The program utilizes the <bits/stdc++.h> library which requires the compiler's support.
+b stand for Sieve of Eratosthenes.
 
-## TODO
-- Performance Optimization: Investigate potential optimizations for each prime calculation algorithm. This could include parallel computing techniques or using more efficient data structures.
-- Error Handling: Enhance error handling for exceptional scenarios, such as insufficient disk space for the output file or extremely large input numbers.
-- Extend Functionality: Consider extending the functionality of the program, such as allowing users to specify a range of numbers for prime calculation instead of starting from 2.
-- Testing: Write comprehensive tests to ensure that all aspects of the program work as expected, especially as optimizations and new features are added.
+c stand for Sieve of Euler.
+
+d stand for Sieve of Sundaram.
+
+e stand for Sieve of Atkin.
+
+f stand for Incremental Sieve.
+
+g stand for Wheel Sieve.
+
+When using multiThread mode Sieve of Atkin and Wheel Sieve aren't supported.
+
+n stand for the upper limit of the primes you want to find.
+
+outputFile is the file that you want the primes to be output.
+
+If no arguments are provided, the program will show this help.
+
+# Build
+Requires cmake.
+````bash
+git clone https://github.com/Water-Buckets/findPrimes_multiThread.git && cd findPrimes_multiThread
+cmake -S . -B ./cmake-build && cmake --build ./cmake-build
+````
