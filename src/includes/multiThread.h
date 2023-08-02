@@ -2,8 +2,8 @@
 // Created by ASUS on 2023/7/7.
 //
 
-#ifndef FINDPRIMES_MULTITHREAD_MULTITHREAD_H
-#define FINDPRIMES_MULTITHREAD_MULTITHREAD_H
+#ifndef FINDPRIMES_MULTITHREAD_H
+#define FINDPRIMES_MULTITHREAD_H
 
 #include "utilities.h"
 #include <cmath>
@@ -152,4 +152,4 @@ void multiThread(
     void (*pPreSieveMethod)(const long long &n,
                             std::vector<long long> &primes));
 
-#endif // FINDPRIMES_MULTITHREAD_MULTITHREAD_H
+#endif // FINDPRIMES_MULTITHREAD_H

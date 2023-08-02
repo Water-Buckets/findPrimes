@@ -2,8 +2,8 @@
 // Created by ASUS on 2023/7/7.
 //
 
-#ifndef FINDPRIMES_MULTITHREAD_MAIN_H
-#define FINDPRIMES_MULTITHREAD_MAIN_H
+#ifndef FINDPRIMES_MAIN_H
+#define FINDPRIMES_MAIN_H
 
 #include "argInput.h"
 #include <iostream>
@@ -50,4 +50,4 @@ inline void printHelp() {
             << std::endl;
 }
 
-#endif // FINDPRIMES_MULTITHREAD_MAIN_H
+#endif // FINDPRIMES_MAIN_H

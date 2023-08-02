@@ -1,5 +1,5 @@
-#ifndef FINDPRIMES_MULTITHREAD_UTILITIES_H
-#define FINDPRIMES_MULTITHREAD_UTILITIES_H
+#ifndef FINDPRIMES_UTILITIES_H
+#define FINDPRIMES_UTILITIES_H
 #include <chrono>
 #include <iostream>
 #include <string>

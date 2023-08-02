@@ -70,7 +70,7 @@ void argInput(char *argv[]) {
     std::cerr << e.what() << std::endl;
     std::cerr
         << "Please submit you issues here: "
-           "https://github.com/Water-Buckets/findPrimes_multiThread/issues"
+           "https://github.com/Water-Buckets/findPrimes/issues"
         << std::endl;
     std::exit(0);
   }

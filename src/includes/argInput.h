@@ -2,8 +2,8 @@
 // Created by ASUS on 2023/7/7.
 //
 
-#ifndef FINDPRIMES_MULTITHREAD_ARGINPUT_H
-#define FINDPRIMES_MULTITHREAD_ARGINPUT_H
+#ifndef FINDPRIMES_ARGINPUT_H
+#define FINDPRIMES_ARGINPUT_H
 
 #include "multiThread.h"
 #include "segSieveMethods.h"
@@ -89,4 +89,4 @@ inline auto switchMMethods(const char &m)
 
 void argInput(char *argv[]);
 
-#endif // FINDPRIMES_MULTITHREAD_ARGINPUT_H
+#endif // FINDPRIMES_ARGINPUT_H
