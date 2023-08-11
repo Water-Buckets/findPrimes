@@ -69,7 +69,7 @@ inline auto switchMMethods(const char &m)
     return segEulerSieve;
   case 'd':
     return segSundaramSieve;
-  case 'f':
+  case 'e':
     return segIncrementalSieve;
   default:
     throw std::invalid_argument("Invalid argument.");
