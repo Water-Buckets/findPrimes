@@ -8,7 +8,7 @@ You can tell the program to use multiple threads by providing a number for threa
 If the number of threads is invalid, the program will exit with an error.
 
 You can tell the program to use a specific method by providing a character for method.
-For method you can choose between 'a' 'b' 'c' 'd' 'e' 'f'.
+For methods you can choose between 'a' 'b' 'c' 'd' 'e' 'f'.
 
 a stand for Trial Division.
 
