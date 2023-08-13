@@ -16,11 +16,6 @@ inline void printHelp() {
 
   std::cout << "Usage: findprimes [threads] [method] [n] [outputFile]"
             << std::endl;
-  std::cout << "If threads equals 1 the program will run in singleThread mode."
-            << std::endl;
-  std::cout
-      << "Else if threads is over 1 the program will run in multiThread mode."
-      << std::endl;
   std::cout << "You can tell the program to use multiple threads by providing "
                "a number for threads."
             << std::endl;
@@ -30,18 +25,13 @@ inline void printHelp() {
   std::cout << "You can tell the program to use a specific method by providing "
                "a character for method."
             << std::endl;
-  std::cout << "For method you can choose between 'a' 'b' 'c' 'd' 'e' 'f' 'g'."
+  std::cout << "For method you can choose between 'a' 'b' 'c' 'd' 'e' 'f'."
             << std::endl;
   std::cout << "a stand for Trial Division" << std::endl;
   std::cout << "b stand for Sieve of Eratosthenes" << std::endl;
   std::cout << "c stand for Sieve of Euler" << std::endl;
   std::cout << "d stand for Sieve of Sundaram" << std::endl;
-  std::cout << "e stand for Sieve of Atkin" << std::endl;
-  std::cout << "f stand for Incremental Sieve" << std::endl;
-  std::cout << "g stand for Wheel Sieve" << std::endl;
-  std::cout << "When using multiThread mode Sieve of Atkin and Wheel Sieve "
-               "aren't supported."
-            << std::endl;
+  std::cout << "e stand for Incremental Sieve" << std::endl;
   std::cout << "n stand for the upper limit of the primes you want to find."
             << std::endl;
   std::cout << "outputFile is the file that you want the primes to be output."
