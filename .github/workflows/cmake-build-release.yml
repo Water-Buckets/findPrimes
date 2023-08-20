@@ -64,11 +64,3 @@ jobs:
 
       - name: Test For incrementalSieve(monothread)
         run: ./build/findPrimes 1 4 99999989 primesIS.txt
-
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v2.1.1
-        with:
-          # Destination path
-          path: ./build/
-
-
