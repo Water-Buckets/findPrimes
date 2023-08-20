@@ -5,10 +5,10 @@
 #ifndef FINDPRIMES_PRIMESGEN_H
 #define FINDPRIMES_PRIMESGEN_H
 
-#include "fstream"
-#include "string"
-#include "vector"
-#include "cmath"
+#include <fstream>
+#include <string>
+#include <vector>
+#include <cmath>
 
 namespace findPrimes {
 
@@ -102,13 +102,13 @@ namespace findPrimes {
 		~primesGenVec() override = default;
 	};
 
-	class primesGenMT : public primesGen {
+	class primesGenSeg : public primesGen {
 
 	protected:
 		unsigned long long lL;
 		std::vector<unsigned long long> preSievedPrimes;
 	private:
-		bool (findPrimes::primesGenMT::*pMethods[5])();
+		bool (findPrimes::primesGenSeg::*pMethods[5])();
 
 		bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
 		                       const std::vector<unsigned long long> &pSP,
@@ -118,34 +118,34 @@ namespace findPrimes {
 
 		bool sundaramSieve() override;
 
-		primesGenMT &operator=(const unsigned long long &i) override {
+		primesGenSeg &operator=(const unsigned long long &i) override {
 			uL = i;
 			return *this;
 		};
 
 	public:
-		primesGenMT(const unsigned long long int &l, const unsigned long long int &u,
-		            const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
-		            const std::string &s = "primes.txt");
+		primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
+		             const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
+		             const std::string &s = "primes.txt");
 
-		primesGenMT(const unsigned long long int &l, const unsigned long long int &u,
-		            const std::vector<unsigned long long> &pSP,
-		            bool (*pM)(const unsigned long long &l, const unsigned long long &u,
+		primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
+		             const std::vector<unsigned long long> &pSP,
+		             bool (*pM)(const unsigned long long &l, const unsigned long long &u,
 		                       const std::vector<unsigned long long> &pSP,
 		                       std::ofstream &ofs),
-		            const std::string &s);
+		             const std::string &s);
 
 		bool run() override;
 
-		~primesGenMT() override = default;
+		~primesGenSeg() override = default;
 	};
 
-	class primesGenVecMT : public primesGenVec {
+	class primesGenVecSeg : public primesGenVec {
 	protected:
 		unsigned long long lL;
 		std::vector<unsigned long long> preSievedPrimes;
 	private:
-		bool (findPrimes::primesGenVecMT::*pMethods[5])();
+		bool (findPrimes::primesGenVecSeg::*pMethods[5])();
 
 		bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
 		                       const std::vector<unsigned long long> &pSP,
@@ -163,22 +163,22 @@ namespace findPrimes {
 
 		std::vector<unsigned long long> primes;
 
-		primesGenVecMT &operator=(const unsigned long long &i) override {
+		primesGenVecSeg &operator=(const unsigned long long &i) override {
 			uL = i;
 			return *this;
 		};
 
 	public:
-		primesGenVecMT(const unsigned long long int &l, const unsigned long long int &u,
-		               const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
-		               const std::string &s = "primes.txt");
+		primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
+		                const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
+		                const std::string &s = "primes.txt");
 
-		primesGenVecMT(const unsigned long long int &l, const unsigned long long int &u,
-		               const std::vector<unsigned long long> &pSP,
-		               bool (*pM)(const unsigned long long &l, const unsigned long long &u,
+		primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
+		                const std::vector<unsigned long long> &pSP,
+		                bool (*pM)(const unsigned long long &l, const unsigned long long &u,
 		                          const std::vector<unsigned long long> &pSP,
 		                          std::vector<unsigned long long> &pVec),
-		               const std::string &s);
+		                const std::string &s);
 
 		bool run() override;
 
@@ -202,7 +202,7 @@ namespace findPrimes {
 			}
 		}
 
-		~primesGenVecMT() override = default;
+		~primesGenVecSeg() override = default;
 	};
 } // findPrimes
 
