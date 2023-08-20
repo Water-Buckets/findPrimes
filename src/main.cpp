@@ -105,7 +105,62 @@ int main(int argc, char *argv[]) {
 		ofs.close();
 		return 0;
 	} else if (threads > 1 && (m == 0 || m == 2 || m == 4)) {
-		//unfinished, yet
+		unsigned long long sqrtN = sqrt(n);
+
+		auto *preSieve = new findPrimes::primesGenVec(sqrtN, m, file);
+
+		std::thread preSievingThread([preSieve]() { preSieve->run(); });
+
+
+		unsigned long long perThread = (n - sqrtN) / threads;
+		std::vector<std::thread> vThread;
+		std::vector<findPrimes::primesGenVecSeg *> results;
+
+		if (preSievingThread.joinable()) {
+			preSievingThread.join();
+		}
+
+		std::vector<unsigned long long> preSievedPrimes = *preSieve;
+		delete preSieve;
+
+		for (int i = 0; i < threads; ++i) {
+			unsigned long long lL = sqrtN + i * perThread + 1;
+			unsigned long long uL = sqrtN + (i + 1) * perThread;
+			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
+
+			if (i == threads - 1) {
+				uL = n;
+			}
+
+			results.push_back(new findPrimes::primesGenVecSeg(lL, uL, preSievedPrimes, m, fileName));
+
+			std::thread thr([results, i]() { results[i]->run(); });
+
+			vThread.emplace_back(std::move(thr));
+		}
+
+
+		std::ofstream ofs(file);
+
+		for (auto &v: preSievedPrimes) {
+			ofs << v << ' ';
+		}
+
+
+		for (auto &thr: vThread) {
+			if (thr.joinable()) {
+				thr.join();
+			}
+		}
+
+		for (int i = 0; i < threads; ++i) {
+			std::vector<unsigned long long> temp = *results[i];
+			for (auto &v: temp) {
+				ofs << v << ' ';
+			}
+			delete results[i];
+			std::filesystem::remove(".temp+" + std::to_string(i) + "+" + file);
+		}
 	} else {
 		throw std::invalid_argument("Invalid argument");
 	}

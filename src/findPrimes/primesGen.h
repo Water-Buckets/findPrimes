@@ -45,7 +45,9 @@ namespace findPrimes {
 
 		virtual bool run();
 
-		virtual ~primesGen() = default;
+		virtual ~primesGen() {
+			ofs.close();
+		};
 
 	};
 
@@ -99,7 +101,9 @@ namespace findPrimes {
 			}
 		}
 
-		~primesGenVec() override = default;
+		~primesGenVec() override {
+			ofs.close();
+		};
 	};
 
 	class primesGenSeg : public primesGen {
@@ -137,7 +141,9 @@ namespace findPrimes {
 
 		bool run() override;
 
-		~primesGenSeg() override = default;
+		~primesGenSeg() override{
+			ofs.close();
+		};
 	};
 
 	class primesGenVecSeg : public primesGenVec {
@@ -202,7 +208,9 @@ namespace findPrimes {
 			}
 		}
 
-		~primesGenVecSeg() override = default;
+		~primesGenVecSeg() override {
+			ofs.close();
+		};
 	};
 } // findPrimes
 
