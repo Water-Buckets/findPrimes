@@ -1,4 +1,4 @@
-# findPrimes
+  # findPrimes
 This is a program designed to find all the prime numbers between 2 and a given number.
 
 # Usage: 
@@ -38,5 +38,5 @@ cmake -S . -B ./cmake-build && cmake --build ./cmake-build
 # Run
 Example:
 ````bash
-findPrimes 32 c 2147483648 primes.txt
+findPrimes 32 1 2147483648 primes.txt
 ````
