@@ -12,206 +12,216 @@
 
 namespace findPrimes {
 
-	class primesGen {
-	protected:
+	inline namespace v1 {
 
-		unsigned long long uL;
-		std::ofstream ofs;
-		unsigned method;
-		std::string fileName;
+		class primesGen {
+		protected:
 
-	private:
-		bool (findPrimes::primesGen::*pMethods[5])();
+			unsigned long long uL;
+			std::ofstream ofs;
+			unsigned method;
+			std::string fileName;
 
-		virtual bool eratosthenesSieve();
+		private:
+			bool (findPrimes::primesGen::*pMethods[5])();
 
-		virtual bool sundaramSieve();
+			virtual bool eratosthenesSieve();
 
-		bool (*pCustomMethods)(const unsigned long long &n, std::ofstream &ofs);
+			virtual bool sundaramSieve();
 
-	public:
+			bool (*pCustomMethods)(const unsigned long long &n, std::ofstream &ofs);
 
-		explicit primesGen(const unsigned long long &u, const unsigned &i = 0, const std::string &s = "primes.txt");
+		public:
 
-		primesGen(const unsigned long long &u, bool (*pM)(const unsigned long long &n, std::ofstream &ofs),
-		          const std::string &s = "primes.txt");
+			explicit primesGen(const unsigned long long &u, const unsigned &i = 0, const std::string &s = "primes.txt");
 
-		virtual std::string getFileName() { return fileName; };
+			primesGen(const unsigned long long &u, bool (*pM)(const unsigned long long &n, std::ofstream &ofs),
+			          const std::string &s = "primes.txt");
 
-		virtual primesGen &operator=(const unsigned long long &i) {
-			uL = i;
-			return *this;
-		}
+			virtual std::string getFileName() { return fileName; };
 
-		virtual bool run();
+			virtual primesGen &operator=(const unsigned long long &i) {
+				uL = i;
+				return *this;
+			}
 
-		virtual ~primesGen() {
-			ofs.close();
+			virtual bool run();
+
+			virtual ~primesGen() {
+				ofs.close();
+			};
+
 		};
 
-	};
+		class primesGenVec : public primesGen {
+		protected:
 
-	class primesGenVec : public primesGen {
-	protected:
+		private:
 
-	private:
+			bool (findPrimes::primesGenVec::*pMethods[5])();
 
-		bool (findPrimes::primesGenVec::*pMethods[5])();
+			virtual bool trialDivision();
 
-		virtual bool trialDivision();
+			bool eratosthenesSieve() override;
 
-		bool eratosthenesSieve() override;
+			virtual bool eulerSieve();
 
-		virtual bool eulerSieve();
+			bool sundaramSieve() override;
 
-		bool sundaramSieve() override;
+			virtual bool incrementalSieve();
 
-		virtual bool incrementalSieve();
+			std::vector<unsigned long long> primes;
 
-		std::vector<unsigned long long> primes;
+			bool (*pCustomMethods)(const unsigned long long &n, std::vector<unsigned long long> &pVec);
 
-		bool (*pCustomMethods)(const unsigned long long &n, std::vector<unsigned long long> &pVec);
+		public:
+			explicit primesGenVec(const unsigned long long &u, const unsigned &i = 0,
+			                      const std::string &s = "primes.txt");
 
-	public:
-		explicit primesGenVec(const unsigned long long &u, const unsigned &i = 0, const std::string &s = "primes.txt");
+			primesGenVec(const unsigned long long &u,
+			             bool (*pM)(const unsigned long long &n, std::vector<unsigned long long> &pVec),
+			             const std::string &s = "primes.txt");
 
-		primesGenVec(const unsigned long long &u,
-		             bool (*pM)(const unsigned long long &n, std::vector<unsigned long long> &pVec),
-		             const std::string &s = "primes.txt");
-
-		bool run() override;
+			bool run() override;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "google-explicit-constructor"
 
-		virtual operator std::vector<unsigned long long>() const {
-			return this->primes;
-		}
+			virtual operator std::vector<unsigned long long>() const {
+				return this->primes;
+			}
 
 #pragma clang diagnostic pop
 
-		virtual bool outputToFile() {
-			if (!ofs.is_open()) {
-				return false;
-			} else {
-				for (auto &v: primes) {
-					ofs << v << ' ';
+			virtual bool outputToFile() {
+				if (!ofs.is_open()) {
+					return false;
+				} else {
+					for (auto &v: primes) {
+						ofs << v << ' ';
+					}
+					return true;
 				}
-				return true;
 			}
-		}
 
-		~primesGenVec() override {
-			ofs.close();
-		};
-	};
-
-	class primesGenSeg : public primesGen {
-
-	protected:
-		unsigned long long lL;
-		std::vector<unsigned long long> preSievedPrimes;
-	private:
-		bool (findPrimes::primesGenSeg::*pMethods[5])();
-
-		bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
-		                       const std::vector<unsigned long long> &pSP,
-		                       std::ofstream &ofs);
-
-		bool eratosthenesSieve() override;
-
-		bool sundaramSieve() override;
-
-		primesGenSeg &operator=(const unsigned long long &i) override {
-			uL = i;
-			return *this;
+			~primesGenVec() override {
+				ofs.close();
+			};
 		};
 
-	public:
-		primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
-		             const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
-		             const std::string &s = "primes.txt");
+		class primesGenSeg : public primesGen {
 
-		primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
-		             const std::vector<unsigned long long> &pSP,
-		             bool (*pM)(const unsigned long long &l, const unsigned long long &u,
-		                       const std::vector<unsigned long long> &pSP,
-		                       std::ofstream &ofs),
-		             const std::string &s);
+		protected:
+			unsigned long long lL;
+			std::vector<unsigned long long> preSievedPrimes;
+		private:
+			bool (findPrimes::primesGenSeg::*pMethods[5])();
 
-		bool run() override;
+			bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
+			                       const std::vector<unsigned long long> &pSP,
+			                       std::ofstream &ofs);
 
-		~primesGenSeg() override{
-			ofs.close();
-		};
-	};
+			bool eratosthenesSieve() override;
 
-	class primesGenVecSeg : public primesGenVec {
-	protected:
-		unsigned long long lL;
-		std::vector<unsigned long long> preSievedPrimes;
-	private:
-		bool (findPrimes::primesGenVecSeg::*pMethods[5])();
+			bool sundaramSieve() override;
 
-		bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
-		                       const std::vector<unsigned long long> &pSP,
-		                       std::vector<unsigned long long> &pVec);
+			primesGenSeg &operator=(const unsigned long long &i) override {
+				uL = i;
+				return *this;
+			};
 
-		bool trialDivision() override;
+		public:
+			primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
+			             const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
+			             const std::string &s = "primes.txt");
 
-		bool eratosthenesSieve() override;
+			primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
+			             const std::vector<unsigned long long> &pSP,
+			             bool (*pM)(const unsigned long long &l, const unsigned long long &u,
+			                        const std::vector<unsigned long long> &pSP,
+			                        std::ofstream &ofs),
+			             const std::string &s);
 
-		bool eulerSieve() override;
+			bool run() override;
 
-		bool sundaramSieve() override;
-
-		bool incrementalSieve() override;
-
-		std::vector<unsigned long long> primes;
-
-		primesGenVecSeg &operator=(const unsigned long long &i) override {
-			uL = i;
-			return *this;
+			~primesGenSeg() override {
+				ofs.close();
+			};
 		};
 
-	public:
-		primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
-		                const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
-		                const std::string &s = "primes.txt");
+		class primesGenVecSeg : public primesGenVec {
+		protected:
+			unsigned long long lL;
+			std::vector<unsigned long long> preSievedPrimes;
+		private:
+			bool (findPrimes::primesGenVecSeg::*pMethods[5])();
 
-		primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
-		                const std::vector<unsigned long long> &pSP,
-		                bool (*pM)(const unsigned long long &l, const unsigned long long &u,
-		                          const std::vector<unsigned long long> &pSP,
-		                          std::vector<unsigned long long> &pVec),
-		                const std::string &s);
+			bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
+			                       const std::vector<unsigned long long> &pSP,
+			                       std::vector<unsigned long long> &pVec);
 
-		bool run() override;
+			bool trialDivision() override;
+
+			bool eratosthenesSieve() override;
+
+			bool eulerSieve() override;
+
+			bool sundaramSieve() override;
+
+			bool incrementalSieve() override;
+
+			std::vector<unsigned long long> primes;
+
+			primesGenVecSeg &operator=(const unsigned long long &i) override {
+				uL = i;
+				return *this;
+			};
+
+		public:
+			primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
+			                const std::vector<unsigned long long> &pSP, const unsigned int &i = 0,
+			                const std::string &s = "primes.txt");
+
+			primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
+			                const std::vector<unsigned long long> &pSP,
+			                bool (*pM)(const unsigned long long &l, const unsigned long long &u,
+			                           const std::vector<unsigned long long> &pSP,
+			                           std::vector<unsigned long long> &pVec),
+			                const std::string &s);
+
+			bool run() override;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "google-explicit-constructor"
 
-		operator std::vector<unsigned long long>() const override {
-			return this->primes;
-		}
+			operator std::vector<unsigned long long>() const override {
+				return this->primes;
+			}
 
 #pragma clang diagnostic pop
 
-		bool outputToFile() override {
-			if (!ofs.is_open()) {
-				return false;
-			} else {
-				for (auto &v: primes) {
-					ofs << v << ' ';
+			bool outputToFile() override {
+				if (!ofs.is_open()) {
+					return false;
+				} else {
+					for (auto &v: primes) {
+						ofs << v << ' ';
+					}
+					return true;
 				}
-				return true;
 			}
-		}
 
-		~primesGenVecSeg() override {
-			ofs.close();
+			~primesGenVecSeg() override {
+				ofs.close();
+			};
 		};
-	};
+
+	}
+
+	namespace v2{
+		//improvements of v1, including DMA related features, optimised functions and algorithms, reduce memory usage.
+		//yet to be done.
+	}
 } // findPrimes
 
 #endif //FINDPRIMES_PRIMESGEN_H
