@@ -11,7 +11,7 @@ env:
   BUILD_TYPE: Debug
 
 jobs:
-  build:
+  build-and-test:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -36,32 +36,31 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Test For trialDivision(multithread)
-        run: ./build/findPrimes 16 a 99999989 primes.txt
+        run: ./build/findPrimes 16 0 99999989 primes+TDMT.txt
 
       - name: Test For eratosthenesSieve(multithread)
-        run: ./build/findPrimes 16 b 99999989 primes.txt
+        run: ./build/findPrimes 16 1 99999989 primesESMT.txt
 
       - name: Test For eulerSieve(multithread)
-        run: ./build/findPrimes 16 c 99999989 primes.txt
+        run: ./build/findPrimes 16 2 99999989 primesEUSMT.txt
 
       - name: Test For sundaramSieve(multithread)
-        run: ./build/findPrimes 16 d 99999989 primes.txt
+        run: ./build/findPrimes 16 3 99999989 primesSSMT.txt
 
       - name: Test For incrementalSieve(multithread)
-        run: ./build/findPrimes 16 e 99999989 primes.txt
+        run: ./build/findPrimes 16 4 99999989 primesISMT.txt
 
-      - name: Test For trialDivision(singlethread)
-        run: ./build/findPrimes 1 a 99999989 primes.txt
+      - name: Test For trialDivision(monothread)
+        run: ./build/findPrimes 1 0 99999989 primesTD.txt
 
-      - name: Test For eratosthenesSieve(singlethread)
-        run: ./build/findPrimes 1 b 99999989 primes.txt
+      - name: Test For eratosthenesSieve(monothread)
+        run: ./build/findPrimes 1 1 99999989 primesES.txt
 
-      - name: Test For eulerSieve(singlethread)
-        run: ./build/findPrimes 1 c 99999989 primes.txt
+      - name: Test For eulerSieve(monothread)
+        run: ./build/findPrimes 1 2 99999989 primesEUS.txt
 
-      - name: Test For sundaramSieve(singlethread)
-        run: ./build/findPrimes 1 d 99999989 primes.txt
+      - name: Test For sundaramSieve(monothread)
+        run: ./build/findPrimes 1 3 99999989 primesSS.txt
 
-      - name: Test For incrementalSieve(singlethread)
-        run: ./build/findPrimes 1 e 99999989 primes.txt
-
+      - name: Test For incrementalSieve(monothread)
+        run: ./build/findPrimes 1 4 99999989 primesIS.txt

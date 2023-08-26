@@ -3,18 +3,10 @@ project(findPrimes)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(findPrimes src/main.cpp
-        src/includes/main.h
-        src/argInput.cpp
-        src/includes/argInput.h
-        src/includes/multiThread.h
-        src/multiThread.cpp
-        src/includes/sieveMethods.h
-        src/includes/segSieveMethods.h
-        src/sieves/segSieveMethods.cpp
-        src/sieves/sieveMethods.cpp
-        src/includes/utilities.h
-        src/utilities.cpp
+add_executable(findPrimes
+        src/main.cpp
+        src/findPrimes/primesGen.cpp
+        src/findPrimes/primesGen.h
 )
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")

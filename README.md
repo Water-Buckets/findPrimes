@@ -1,4 +1,4 @@
-# findPrimes
+  # findPrimes
 This is a program designed to find all the prime numbers between 2 and a given number.
 
 # Usage: 
@@ -8,7 +8,7 @@ You can tell the program to use multiple threads by providing a number for threa
 If the number of threads is invalid, the program will exit with an error.
 
 You can tell the program to use a specific method by providing a character for method.
-For method you can choose between 'a' 'b' 'c' 'd' 'e' 'f'.
+For methods you can choose between 'a' 'b' 'c' 'd' 'e' 'f'.
 
 a stand for Trial Division.
 
@@ -38,5 +38,5 @@ cmake -S . -B ./cmake-build && cmake --build ./cmake-build
 # Run
 Example:
 ````bash
-findPrimes 32 c 2147483648 primes.txt
+findPrimes 32 1 2147483648 primes.txt
 ````
