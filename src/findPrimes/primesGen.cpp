@@ -417,4 +417,188 @@ namespace findPrimes {
 			}
 		}
 	}
+
+	namespace v2 {
+
+		primesGen::primesGen(const unsigned long long int &u, const unsigned int &m, const std::string &f)
+				: pMethods{nullptr, &primesGen::eratosthenesSieve, nullptr, &primesGen::sundaramSieve, nullptr} {
+			uL = u;
+			method = m;
+			pCustomMethods = nullptr;
+			file = f;
+		}
+
+		primesGen::primesGen(const unsigned long long int &u,
+		                     void (*pM)(const unsigned long long int &, const std::string &), const std::string &f)
+				: pMethods{nullptr} {
+			uL = u;
+			pCustomMethods = pM;
+			method = 0;
+			file = f;
+		}
+
+		void primesGen::run() {
+			if (pCustomMethods == nullptr) {
+				if (method == 1 || method == 3) {
+					(this->*pMethods[method])();
+				} else {
+					throw std::invalid_argument("Invalid method.");
+				}
+			} else {
+				(*pCustomMethods)(uL, file);
+			}
+		}
+
+		void primesGen::eratosthenesSieve() {
+			std::ofstream ofs(file);
+			if (!ofs.is_open()) {
+				throw std::runtime_error("Failed to open file.");
+			} else {
+				if (uL >= 2) ofs << 2 << ' ';
+				unsigned long long k = uL + 1;
+				std::vector<bool> isPrime(k, true);
+				for (unsigned long long i = 3; i <= uL; i += 2) {
+					if (isPrime[i]) {
+						ofs << i << ' ';
+						for (unsigned long long j = i * i; j <= k; j += 2 * i) {
+							isPrime[j] = false;
+						}
+					}
+				}
+				ofs.close();
+			}
+		}
+
+		void primesGen::sundaramSieve() {
+			std::ofstream ofs(file);
+			if (!ofs.is_open()) {
+				throw std::runtime_error("Failed to open file.");
+			} else {
+				unsigned long long k = (uL - 1) / 2;
+				std::vector<bool> isPrime(k + 1, true);
+				unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * k) - 1) / 2) + 1;
+				for (unsigned long long i = 1; i <= h; ++i) {
+					unsigned long long p = 2 * i + 1;
+					for (unsigned long long j = 2 * i + 2 * i * i; j <= k; j += p) {
+						isPrime[j] = false;
+					}
+				}
+				if (uL >= 2) ofs << 2 << ' ';
+				for (unsigned long long i = 1; i < k + 1; ++i) {
+					if (isPrime[i])
+						ofs << (2 * i + 1) << ' ';
+				}
+			}
+		}
+
+		primesGenVec::primesGenVec(const unsigned long long &u, const unsigned int &m, const std::string &f)
+				: primesGen(u, m, f),
+				  pMethods{&primesGenVec::trialDivision, &primesGenVec::eratosthenesSieve, &primesGenVec::eulerSieve,
+				           &primesGenVec::sundaramSieve, &primesGenVec::incrementalSieve} {
+			pCustomMethods = nullptr;
+		}
+
+		primesGenVec::primesGenVec(const unsigned long long int &u,
+		                           void (*pM)(const unsigned long long int &, std::vector<unsigned long long int> &),
+		                           const std::string &f) : primesGen(u, nullptr, f), pMethods{nullptr} {
+			pCustomMethods = pM;
+		}
+
+		void primesGenVec::trialDivision() {
+			if (uL >= 2) primes.push_back(2);
+			for (unsigned long long i = 3; i <= uL; i += 2) {
+				bool isPrime = false;
+				for (unsigned long long p: primes) {
+					if (p * p > i) break;
+					if (i % p == 0) {
+						isPrime = true;
+						break;
+					}
+				}
+				if (!isPrime) primes.push_back(i);
+			}
+		}
+
+		void primesGenVec::eratosthenesSieve() {
+			if (uL >= 2) primes.push_back(2);
+			unsigned long long k = uL + 1;
+			std::vector<bool> isPrime(k, true);
+			for (unsigned long long i = 3; i <= uL; i += 2) {
+				if (isPrime[i]) {
+					primes.push_back(i);
+					for (unsigned long long j = i * i; j <= k; j += 2 * i) {
+						isPrime[j] = false;
+					}
+				}
+			}
+		}
+
+		void primesGenVec::eulerSieve() {
+			std::vector<bool> isPrime(uL + 1, true);
+			if (uL >= 2) primes.push_back(2);
+			for (unsigned long long i = 3; i <= uL; i += 2) {
+				if (isPrime[i]) {
+					primes.push_back(i);
+				}
+				for (unsigned long long j = 0; j < primes.size() && i * primes[j] * 2 <= uL; ++j) {
+					isPrime[i * primes[j] * 2] = false;
+					if (i % (primes[j] * 2) == 0) {
+						break;
+					}
+				}
+			}
+		}
+
+		void primesGenVec::sundaramSieve() {
+			unsigned long long k = (uL - 1) / 2;
+			std::vector<bool> isPrime(k + 1, true);
+			unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * k) - 1) / 2) + 1;
+			for (unsigned long long i = 1; i <= h; ++i) {
+				unsigned long long p = 2 * i + 1;
+				for (unsigned long long j = 2 * i + 2 * i * i; j <= k; j += p) {
+					isPrime[j] = false;
+				}
+			}
+			if (uL >= 2) primes.push_back(2);
+			for (unsigned long long i = 1; i < k + 1; ++i) {
+				if (isPrime[i])
+					primes.push_back(2 * i + 1);
+			}
+		}
+
+		void primesGenVec::incrementalSieve() {
+			std::vector<unsigned long long> mp;
+			for (unsigned long long i = 2; i < uL + 1; ++i) {
+				bool flag = true;
+				unsigned long long limit = sqrt(i);
+				for (unsigned long long k = 0; k < primes.size(); ++k) {
+					if (primes[k] > limit) break;
+					while (mp[k] < i) {
+						mp[k] += primes[k];
+					}
+					if (mp[k] == i) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					primes.push_back(i);
+					mp.push_back(i * i);
+				}
+			}
+		}
+
+		void primesGenVec::run() {
+			if (pCustomMethods == nullptr) {
+				if (method == 1 || method == 3) {
+					(this->*pMethods[method])();
+				} else {
+					throw std::invalid_argument("Invalid method.");
+				}
+			} else {
+				(*pCustomMethods)(uL, primes);
+			}
+			primes.shrink_to_fit();
+		}
+	}
 } // findPrimes

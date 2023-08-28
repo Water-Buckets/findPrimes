@@ -7,6 +7,8 @@
 #include <cmath>
 #include <thread>
 #include <filesystem>
+#include <iostream>
+#include <fstream>
 
 inline bool isNumeric(const std::string &str) {
 	for (char c: str) {
@@ -46,54 +48,61 @@ int main(int argc, char *argv[]) {
 		delete results;
 		return 0;
 	} else if (threads > 1 && (m == 1 || m == 3)) {
-		unsigned long long sqrtN = sqrt(n);
+		auto *sqrtN = new unsigned long long(sqrt(n));
 
-		auto *preSieve = new findPrimes::primesGenVec(sqrtN, m, file);
+		auto *preSieve = new findPrimes::primesGenVec(*sqrtN, m, file);
 
 		std::thread preSievingThread([preSieve]() { preSieve->run(); });
 
-		unsigned long long perThread = (n - sqrtN) / threads;
-		std::vector<std::thread> vThread;
+		unsigned long long perThread = (n - *sqrtN) / threads;
+		auto vThread = new std::vector<std::thread>;
 		std::vector<findPrimes::primesGenSeg *> results;
 
 		if (preSievingThread.joinable()) {
 			preSievingThread.join();
 		}
 
-		std::vector<unsigned long long> preSievedPrimes = *preSieve;
+		auto *preSievedPrimes = new std::vector<unsigned long long>(*preSieve);
 		delete preSieve;
 
 		for (int i = 0; i < threads; ++i) {
-			unsigned long long lL = sqrtN + i * perThread + 1;
-			unsigned long long uL = sqrtN + (i + 1) * perThread;
+			unsigned long long lL = *sqrtN + i * perThread + 1;
+			unsigned long long uL = *sqrtN + (i + 1) * perThread;
 			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
 
 			if (i == threads - 1) {
 				uL = n;
 			}
 
-			results.push_back(new findPrimes::primesGenSeg(lL, uL, preSievedPrimes, m, fileName));
+			results.push_back(new findPrimes::primesGenSeg(lL, uL, *preSievedPrimes, m, fileName));
 
-			std::thread thr([results, i]() { results[i]->run(); });
+			std::thread thr([results, i]() {
+				results[i]->run();
+				delete results[i];
+			});
 
-			vThread.emplace_back(std::move(thr));
+			vThread->emplace_back(std::move(thr));
 		}
+
+		delete sqrtN;
 
 		std::ofstream ofs(file);
 
-		for (auto &v: preSievedPrimes) {
+		for (auto &v: *preSievedPrimes) {
 			ofs << v << ' ';
 		}
 
-		for (auto &thr: vThread) {
+		delete preSievedPrimes;
+
+		for (auto &thr: *vThread) {
 			if (thr.joinable()) {
 				thr.join();
 			}
 		}
 
+		delete vThread;
 
 		for (int i = 0; i < threads; ++i) {
-			delete results[i];
 			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
 			std::ifstream ifs(fileName);
 			unsigned long long temp;
