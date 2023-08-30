@@ -126,14 +126,13 @@ namespace findPrimes {
 
 		bool primesGenVec::eulerSieve() {
 			std::vector<bool> isPrime(uL + 1, true);
-			if (uL >= 2) primes.push_back(2);
-			for (unsigned long long i = 3; i <= uL; i += 2) {
+			for (unsigned long long i = 2; i <= uL; ++i) {
 				if (isPrime[i]) {
 					primes.push_back(i);
 				}
-				for (unsigned long long j = 0; j < primes.size() && i * primes[j] * 2 <= uL; ++j) {
-					isPrime[i * primes[j] * 2] = false;
-					if (i % (primes[j] * 2) == 0) {
+				for (unsigned long long j = 0; j < primes.size() && i * primes[j] <= uL; ++j) {
+					isPrime[i * primes[j]] = false;
+					if (i % primes[j] == 0) {
 						break;
 					}
 				}
@@ -241,23 +240,25 @@ namespace findPrimes {
 				unsigned long long newLL = (lL + 1) / 2;
 				unsigned long long newUL = (uL - 1) / 2;
 
-				std::vector<bool> isPrime(newUL + 1, true);
+				std::vector<bool> isPrime(newUL - newLL + 1, true);
 
 				unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * newUL) - 1) / 2) + 1;
 
 				for (unsigned long long i = 1; i <= h; ++i) {
-					unsigned long long p = 2 * i + 1;
-					unsigned long long start = std::max(2 * i + 2 * i * i, (newLL + i - 1) / i * i);
-					for (unsigned long long j = start; j <= newUL; j += p) {
-						isPrime[j] = false;
+					for (unsigned long long j = i; j <= 2 * (newUL - i) / (2 * i + 1); ++j) {
+						unsigned long long index = i + j + 2 * i * j;
+						if (index >= newLL && index <= newUL) {
+							isPrime[index - newLL] = false;
+						}
 					}
 				}
 
-				if (2 >= 2 * newLL + 1 && 2 <= 2 * newUL + 1) ofs << 2 << ' ';
+				if (2 >= lL && 2 <= uL) ofs << 2 << ' ';
 
-				for (unsigned long long i = newLL; i <= newUL; ++i) {
-					if (isPrime[i])
-						ofs << (2 * i + 1) << ' ';
+				for (unsigned long long i = 0; i <= newUL - newLL; ++i) {
+					if (isPrime[i]) {
+						ofs << (2 * (i + newLL) + 1) << ' ';
+					}
 				}
 				return true;
 			}
@@ -358,23 +359,25 @@ namespace findPrimes {
 			unsigned long long newLL = (lL + 1) / 2;
 			unsigned long long newUL = (uL - 1) / 2;
 
-			std::vector<bool> isPrime(newUL + 1, true);
+			std::vector<bool> isPrime(newUL - newLL + 1, true);
 
 			unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * newUL) - 1) / 2) + 1;
 
 			for (unsigned long long i = 1; i <= h; ++i) {
-				unsigned long long p = 2 * i + 1;
-				unsigned long long start = std::max(2 * i + 2 * i * i, (newLL + i - 1) / i * i);
-				for (unsigned long long j = start; j <= newUL; j += p) {
-					isPrime[j] = false;
+				for (unsigned long long j = i; j <= 2 * (newUL - i) / (2 * i + 1); ++j) {
+					unsigned long long index = i + j + 2 * i * j;
+					if (index >= newLL && index <= newUL) {
+						isPrime[index - newLL] = false;
+					}
 				}
 			}
 
-			if (2 >= 2 * newLL + 1 && 2 <= 2 * newUL + 1) primes.push_back(2);
+			if (2 >= lL && 2 <= uL) primes.push_back(2);
 
-			for (unsigned long long i = newLL; i <= newUL; ++i) {
-				if (isPrime[i])
-					primes.push_back(2 * i + 1);
+			for (unsigned long long i = 0; i <= newUL - newLL; ++i) {
+				if (isPrime[i]) {
+					primes.push_back(2 * (i + newLL) + 1);
+				}
 			}
 			return true;
 		}
@@ -403,9 +406,11 @@ namespace findPrimes {
 				}
 				if (isPrime) {
 					primes.push_back(i);
+					results.push_back(i);
 					mp.push_back(i * i);
 				}
 			}
+			primes = results;
 			return true;
 		}
 
