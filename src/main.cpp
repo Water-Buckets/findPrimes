@@ -7,6 +7,8 @@
 #include <cmath>
 #include <thread>
 #include <filesystem>
+#include <iostream>
+#include <fstream>
 
 inline bool isNumeric(const std::string &str) {
 	for (char c: str) {
@@ -36,64 +38,110 @@ int main(int argc, char *argv[]) {
 
 	if (threads == 1 && (m == 1 || m == 3)) {
 		auto *results = new findPrimes::primesGen(n, m, file);
+		auto start = std::chrono::steady_clock::now();
 		results->run();
+		auto end = std::chrono::steady_clock::now();
+		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
 		delete results;
 		return 0;
 	} else if (threads == 1 && (m == 0 || m == 2 || m == 4)) {
 		auto *results = new findPrimes::primesGenVec(n, m, file);
+		auto start = std::chrono::steady_clock::now();
 		results->run();
+		auto end = std::chrono::steady_clock::now();
+		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
+		auto startWrite = std::chrono::steady_clock::now();
 		results->outputToFile();
+		auto endWrite = std::chrono::steady_clock::now();
+		long long durationWrite = std::chrono::duration_cast<std::chrono::nanoseconds>(endWrite - startWrite).count();
+		std::cout << "Time elapsed writing to file: " << double(durationWrite) / 1000000000 << " seconds." << std::endl;
 		delete results;
+		std::cout << "Total time elapsed: " << (duration + durationWrite) / 1000000000 << " seconds." << std::endl;
 		return 0;
 	} else if (threads > 1 && (m == 1 || m == 3)) {
-		unsigned long long sqrtN = sqrt(n);
+		auto startTotal = std::chrono::steady_clock::now();
 
-		auto *preSieve = new findPrimes::primesGenVec(sqrtN, m, file);
+		auto *sqrtN = new unsigned long long(sqrt(n));
+
+		auto *preSieve = new findPrimes::primesGenVec(*sqrtN, m, file);
+
+		auto startPreSieve = std::chrono::steady_clock::now();
 
 		std::thread preSievingThread([preSieve]() { preSieve->run(); });
 
-		unsigned long long perThread = (n - sqrtN) / threads;
-		std::vector<std::thread> vThread;
+		unsigned long long perThread = (n - *sqrtN) / threads;
+		auto vThread = new std::vector<std::thread>;
 		std::vector<findPrimes::primesGenSeg *> results;
 
 		if (preSievingThread.joinable()) {
 			preSievingThread.join();
 		}
 
-		std::vector<unsigned long long> preSievedPrimes = *preSieve;
+		auto endPreSieve = std::chrono::steady_clock::now();
+		long long durationPreSieve = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				endPreSieve - startPreSieve).count();
+		std::cout << "Time elapsed pre-sieving: " << double(durationPreSieve) / 1000000000 << " seconds." << std::endl;
+
+		auto *preSievedPrimes = new std::vector<unsigned long long>(*preSieve);
 		delete preSieve;
 
+		auto start = std::chrono::steady_clock::now();
+
 		for (int i = 0; i < threads; ++i) {
-			unsigned long long lL = sqrtN + i * perThread + 1;
-			unsigned long long uL = sqrtN + (i + 1) * perThread;
+			unsigned long long lL = *sqrtN + i * perThread + 1;
+			unsigned long long uL = *sqrtN + (i + 1) * perThread;
 			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
 
 			if (i == threads - 1) {
 				uL = n;
 			}
 
-			results.push_back(new findPrimes::primesGenSeg(lL, uL, preSievedPrimes, m, fileName));
+			results.push_back(new findPrimes::primesGenSeg(lL, uL, *preSievedPrimes, m, fileName));
 
-			std::thread thr([results, i]() { results[i]->run(); });
+			std::thread thr([results, i]() {
+				results[i]->run();
+				delete results[i];
+			});
 
-			vThread.emplace_back(std::move(thr));
+			vThread->emplace_back(std::move(thr));
 		}
 
-		std::ofstream ofs(file);
+		delete sqrtN;
 
-		for (auto &v: preSievedPrimes) {
+		std::ofstream ofs(file);
+		if (!ofs.is_open()) { throw std::runtime_error("Failed to open file."); }
+
+		auto startWritePre = std::chrono::steady_clock::now();
+
+		for (auto &v: *preSievedPrimes) {
 			ofs << v << ' ';
 		}
 
-		for (auto &thr: vThread) {
+		auto endWritePre = std::chrono::steady_clock::now();
+		long long durationWritePre = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				endWritePre - startWritePre).count();
+		std::cout << "Time elapsed writing to file: " << double(durationWritePre) / 1000000000 << " seconds."
+		          << std::endl;
+
+		delete preSievedPrimes;
+
+		for (auto &thr: *vThread) {
 			if (thr.joinable()) {
 				thr.join();
 			}
 		}
 
+		auto end = std::chrono::steady_clock::now();
+		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
+
+		delete vThread;
+
+		auto startCombine = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < threads; ++i) {
-			delete results[i];
 			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
 			std::ifstream ifs(fileName);
 			unsigned long long temp;
@@ -102,12 +150,24 @@ int main(int argc, char *argv[]) {
 			}
 			std::filesystem::remove(fileName);
 		}
+		auto endCombine = std::chrono::steady_clock::now();
+		long long durationCombine = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				endCombine - startCombine).count();
+		std::cout << "Time elapsed writing to file: " << double(durationCombine) / 1000000000 << " seconds."
+		          << std::endl;
+		auto endTotal = std::chrono::steady_clock::now();
+		long long durationTotal = std::chrono::duration_cast<std::chrono::nanoseconds>(endTotal - startTotal).count();
+		std::cout << "Total time elapsed: " << double(durationTotal) / 1000000000 << " seconds." << std::endl;
 		ofs.close();
 		return 0;
 	} else if (threads > 1 && (m == 0 || m == 2 || m == 4)) {
+		auto startTotal = std::chrono::steady_clock::now();
+
 		unsigned long long sqrtN = sqrt(n);
 
 		auto *preSieve = new findPrimes::primesGenVec(sqrtN, m, file);
+
+		auto startPreSieve = std::chrono::steady_clock::now();
 
 		std::thread preSievingThread([preSieve]() { preSieve->run(); });
 
@@ -120,8 +180,15 @@ int main(int argc, char *argv[]) {
 			preSievingThread.join();
 		}
 
+		auto endPreSieve = std::chrono::steady_clock::now();
+		long long durationPreSieve = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				endPreSieve - startPreSieve).count();
+		std::cout << "Time elapsed pre-sieving: " << double(durationPreSieve) / 1000000000 << " seconds." << std::endl;
+
 		std::vector<unsigned long long> preSievedPrimes = *preSieve;
 		delete preSieve;
+
+		auto start = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < threads; ++i) {
 			unsigned long long lL = sqrtN + i * perThread + 1;
@@ -139,13 +206,21 @@ int main(int argc, char *argv[]) {
 			vThread.emplace_back(std::move(thr));
 		}
 
-
 		std::ofstream ofs(file);
+
+		if (!ofs.is_open()) { throw std::runtime_error("Failed to open file."); }
+
+		auto startWritePre = std::chrono::steady_clock::now();
 
 		for (auto &v: preSievedPrimes) {
 			ofs << v << ' ';
 		}
 
+		auto endWritePre = std::chrono::steady_clock::now();
+		long long durationWritePre = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				endWritePre - startWritePre).count();
+		std::cout << "Time elapsed writing to file: " << double(durationWritePre) / 1000000000 << " seconds."
+		          << std::endl;
 
 		for (auto &thr: vThread) {
 			if (thr.joinable()) {
@@ -153,14 +228,25 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
+		auto end = std::chrono::steady_clock::now();
+		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
+
+		auto startWrite = std::chrono::steady_clock::now();
+
 		for (int i = 0; i < threads; ++i) {
-			std::vector<unsigned long long> temp = *results[i];
-			for (auto &v: temp) {
-				ofs << v << ' ';
-			}
+			results[i]->output(ofs);
 			delete results[i];
 			std::filesystem::remove(".temp+" + std::to_string(i) + "+" + file);
 		}
+
+		auto endWrite = std::chrono::steady_clock::now();
+		long long durationWrite = std::chrono::duration_cast<std::chrono::nanoseconds>(endWrite - startWrite).count();
+		std::cout << "Time elapsed writing to file: " << double(durationWrite) / 1000000000 << " seconds." << std::endl;
+		auto endTotal = std::chrono::steady_clock::now();
+		long long durationTotal = std::chrono::duration_cast<std::chrono::nanoseconds>(endTotal - startTotal).count();
+		std::cout << "Total time elapsed: " << double(durationTotal) / 1000000000 << " seconds." << std::endl;
+		return 0;
 	} else {
 		throw std::invalid_argument("Invalid argument");
 	}
