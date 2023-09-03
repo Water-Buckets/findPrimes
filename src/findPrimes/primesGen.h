@@ -13,7 +13,7 @@
 
 namespace findPrimes {
 
-	inline namespace v1 {
+	/*inline*/ namespace v1 {
 
 		class primesGen {
 		protected:
@@ -117,8 +117,7 @@ namespace findPrimes {
 			bool (findPrimes::v1::primesGenSeg::*pMethods[5])();
 
 			bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
-			                       const std::vector<unsigned long long> &pSP,
-			                       std::ofstream &ofs);
+			                       const std::vector<unsigned long long> &pSP, std::ofstream &ofs);
 
 			bool eratosthenesSieve() override;
 
@@ -137,8 +136,7 @@ namespace findPrimes {
 			primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
 			             const std::vector<unsigned long long> &pSP,
 			             bool (*pM)(const unsigned long long &l, const unsigned long long &u,
-			                        const std::vector<unsigned long long> &pSP,
-			                        std::ofstream &ofs),
+			                        const std::vector<unsigned long long> &pSP, std::ofstream &ofs),
 			             const std::string &s);
 
 			bool run() override;
@@ -156,8 +154,7 @@ namespace findPrimes {
 			bool (findPrimes::v1::primesGenVecSeg::*pMethods[5])();
 
 			bool (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
-			                       const std::vector<unsigned long long> &pSP,
-			                       std::vector<unsigned long long> &pVec);
+			                       const std::vector<unsigned long long> &pSP, std::vector<unsigned long long> &pVec);
 
 			bool trialDivision() override;
 
@@ -184,8 +181,7 @@ namespace findPrimes {
 			                const std::vector<unsigned long long> &pSP,
 			                bool (*pM)(const unsigned long long &l, const unsigned long long &u,
 			                           const std::vector<unsigned long long> &pSP,
-			                           std::vector<unsigned long long> &pVec),
-			                const std::string &s);
+			                           std::vector<unsigned long long> &pVec), const std::string &s);
 
 			bool run() override;
 
@@ -196,7 +192,7 @@ namespace findPrimes {
 
 	}
 
-	namespace v2 {
+	inline namespace v2 {
 		//improvements of v1, including DMA related features, optimised functions and algorithms, reduce memory usage.
 		//yet to be done.
 
@@ -222,17 +218,10 @@ namespace findPrimes {
 
 			std::string getFileName() { return file; };
 
-			primesGen &operator=(const unsigned long long &i) {
-				uL = i;
-				return *this;
-			}
-
 			virtual void run();
-
-			virtual ~primesGen() = 0;
 		};
 
-		class primesGenVec : public primesGen {
+		class primesGenVec : virtual public primesGen {
 		protected:
 			std::vector<unsigned long long> primes;
 
@@ -286,8 +275,67 @@ namespace findPrimes {
 					ofs.close();
 				}
 			}
+		};
 
-			~primesGenVec() override = 0;
+		class primesGenSeg : virtual public primesGen {
+		protected:
+			unsigned long long lL;
+			std::vector<unsigned long long> preSievedPrimes;
+		private:
+			void (findPrimes::v2::primesGenSeg::*pMethods[5])();
+
+			void (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
+			                       const std::vector<unsigned long long> &pSP, const std::string &s);
+
+			void eratosthenesSieve() override;
+
+			void sundaramSieve() override;
+
+		public:
+			primesGenSeg(const unsigned long long &l, const unsigned long long &u,
+			             const std::vector<unsigned long long> &pSP, const unsigned &m, const std::string &f);
+
+			primesGenSeg(const unsigned long long &l, const unsigned long long &u,
+			             const std::vector<unsigned long long> &pSP,
+			             void (*pM)(const unsigned long long &l, const unsigned long long &u,
+			                        const std::vector<unsigned long long> &pSP, const std::string &s),
+			             const std::string &f);
+
+			void run() override;
+		};
+
+		class primesGenVecSeg : public primesGenVec {
+		protected:
+			unsigned long long lL;
+			std::vector<unsigned long long> preSievedPrimes;
+		private:
+			void (findPrimes::v2::primesGenVecSeg::*pMethods[5])();
+
+			void (*pCustomMethods)(const unsigned long long &l, const unsigned long long &u,
+			                       const std::vector<unsigned long long> &pSP, std::vector<unsigned long long> &pVec);
+
+			void trialDivision() override;
+
+			void eratosthenesSieve() override;
+
+			void eulerSieve() override;
+
+			void sundaramSieve() override;
+
+			void incrementalSieve() override;
+
+		public:
+			primesGenVecSeg(const unsigned long long &l, const unsigned long long &u,
+			                const std::vector<unsigned long long> &pSP, const unsigned &m, const std::string &f);
+
+			primesGenVecSeg(const unsigned long long &l, const unsigned long long &u,
+			                const std::vector<unsigned long long> &pSP,
+			                void (*pM)(const unsigned long long &l, const unsigned long long &u,
+			                           const std::vector<unsigned long long> &pSP,
+			                           std::vector<unsigned long long> &pVecs), const std::string &f);
+
+			void run() override;
+
 		};
 	}
 } // findPrimes
