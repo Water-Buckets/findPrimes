@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 inline bool isNumeric(const std::string &str) {
 	for (char c: str) {
@@ -122,8 +123,8 @@ int main(int argc, char *argv[]) {
 		auto endWritePre = std::chrono::steady_clock::now();
 		long long durationWritePre = std::chrono::duration_cast<std::chrono::nanoseconds>(
 				endWritePre - startWritePre).count();
-		std::cout << "Time elapsed writing to file: " << double(durationWritePre) / 1000000000 << " seconds."
-		          << std::endl;
+		std::cout << "Time elapsed writing pre-sieved results to file: " << double(durationWritePre) / 1000000000
+		          << " seconds." << std::endl;
 
 		delete preSievedPrimes;
 
@@ -153,7 +154,7 @@ int main(int argc, char *argv[]) {
 		auto endCombine = std::chrono::steady_clock::now();
 		long long durationCombine = std::chrono::duration_cast<std::chrono::nanoseconds>(
 				endCombine - startCombine).count();
-		std::cout << "Time elapsed writing to file: " << double(durationCombine) / 1000000000 << " seconds."
+		std::cout << "Time elapsed combining results: " << double(durationCombine) / 1000000000 << " seconds."
 		          << std::endl;
 		auto endTotal = std::chrono::steady_clock::now();
 		long long durationTotal = std::chrono::duration_cast<std::chrono::nanoseconds>(endTotal - startTotal).count();
@@ -219,8 +220,8 @@ int main(int argc, char *argv[]) {
 		auto endWritePre = std::chrono::steady_clock::now();
 		long long durationWritePre = std::chrono::duration_cast<std::chrono::nanoseconds>(
 				endWritePre - startWritePre).count();
-		std::cout << "Time elapsed writing to file: " << double(durationWritePre) / 1000000000 << " seconds."
-		          << std::endl;
+		std::cout << "Time elapsed writing pre-sieved results to file: " << double(durationWritePre) / 1000000000
+		          << " seconds." << std::endl;
 
 		for (auto &thr: vThread) {
 			if (thr.joinable()) {

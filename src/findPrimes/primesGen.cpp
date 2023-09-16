@@ -9,7 +9,12 @@ namespace findPrimes {
 	/*inline*/ namespace v1 {
 		primesGen::primesGen(const unsigned long long int &u, const unsigned int &i, const std::string &s) : ofs(
 				std::ofstream(s)),
-				pMethods{nullptr, &primesGen::eratosthenesSieve, nullptr, &primesGen::sundaramSieve, nullptr} {
+		                                                                                                     pMethods{
+				                                                                                                     nullptr,
+				                                                                                                     &primesGen::eratosthenesSieve,
+				                                                                                                     nullptr,
+				                                                                                                     &primesGen::sundaramSieve,
+				                                                                                                     nullptr} {
 			fileName = s;
 			uL = u;
 			method = i;
@@ -85,15 +90,15 @@ namespace findPrimes {
 
 		primesGenVec::primesGenVec(const unsigned long long int &u, const unsigned int &i, const std::string &s)
 				: primesGen(u, i, s),
-				pMethods{&primesGenVec::trialDivision, &primesGenVec::eratosthenesSieve, &primesGenVec::eulerSieve,
-				         &primesGenVec::sundaramSieve, &primesGenVec::incrementalSieve} {
+				  pMethods{&primesGenVec::trialDivision, &primesGenVec::eratosthenesSieve, &primesGenVec::eulerSieve,
+				           &primesGenVec::sundaramSieve, &primesGenVec::incrementalSieve} {
 			pCustomMethods = nullptr;
 		}
 
 		primesGenVec::primesGenVec(const unsigned long long int &u,
 		                           bool (*pM)(const unsigned long long int &, std::vector<unsigned long long int> &),
 		                           const std::string &s) : primesGen(u, nullptr, s),
-				pMethods{nullptr, nullptr, nullptr, nullptr, nullptr} {
+		                                                   pMethods{nullptr, nullptr, nullptr, nullptr, nullptr} {
 			pCustomMethods = pM;
 		}
 
@@ -209,7 +214,8 @@ namespace findPrimes {
 		primesGenSeg::primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
 		                           const std::vector<unsigned long long> &pSP, const unsigned int &i,
 		                           const std::string &s) : primesGen(u, i, s),
-				pMethods{nullptr, &primesGenSeg::eratosthenesSieve, nullptr, &primesGenSeg::sundaramSieve, nullptr} {
+		                                                   pMethods{nullptr, &primesGenSeg::eratosthenesSieve, nullptr,
+		                                                            &primesGenSeg::sundaramSieve, nullptr} {
 			lL = l;
 			preSievedPrimes = pSP;
 			pCustomMethods = nullptr;
@@ -220,7 +226,7 @@ namespace findPrimes {
 		                           bool (*pM)(const unsigned long long &l, const unsigned long long &u,
 		                                      const std::vector<unsigned long long> &pSP, std::ofstream &ofs),
 		                           const std::string &s) : primesGen(u, nullptr, s),
-				pMethods{nullptr, nullptr, nullptr, nullptr, nullptr} {
+		                                                   pMethods{nullptr, nullptr, nullptr, nullptr, nullptr} {
 			lL = l;
 			preSievedPrimes = pSP;
 			pCustomMethods = pM;
@@ -294,9 +300,11 @@ namespace findPrimes {
 		primesGenVecSeg::primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
 		                                 const std::vector<unsigned long long int> &pSP, const unsigned int &i,
 		                                 const std::string &s) : primesGenVec(u, i, s),
-				pMethods{&primesGenVecSeg::trialDivision, &primesGenVecSeg::eratosthenesSieve,
-				         &primesGenVecSeg::eulerSieve, &primesGenVecSeg::sundaramSieve,
-				         &primesGenVecSeg::incrementalSieve} {
+		                                                         pMethods{&primesGenVecSeg::trialDivision,
+		                                                                  &primesGenVecSeg::eratosthenesSieve,
+		                                                                  &primesGenVecSeg::eulerSieve,
+		                                                                  &primesGenVecSeg::sundaramSieve,
+		                                                                  &primesGenVecSeg::incrementalSieve} {
 			lL = l;
 			preSievedPrimes = pSP;
 			pCustomMethods = nullptr;
@@ -524,16 +532,12 @@ namespace findPrimes {
 				unsigned long long k = (uL - 1) / 2;
 				std::vector<bool> isPrime(k + 1, true);
 
-				auto markMultiples = [&isPrime, &k](unsigned long long i, unsigned long long p) {
-					for (unsigned long long j = i; j <= k; j += p) {
-						isPrime[j] = false;
-					}
-				};
-
 				unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * k) - 1) / 2) + 1;
 				for (unsigned long long i = 1; i <= h; ++i) {
 					unsigned long long p = 2 * i + 1;
-					markMultiples(2 * i + 2 * i * i, p);
+					for (unsigned long long j = 2 * i + 2 * i * i; j <= k; j += p) {
+						isPrime[j] = false;
+					}
 				}
 
 				if (uL >= 2) {
@@ -549,8 +553,8 @@ namespace findPrimes {
 
 		primesGenVec::primesGenVec(const unsigned long long &u, const unsigned int &m, const std::string &f)
 				: primesGen(u, m, f),
-				pMethods{&primesGenVec::trialDivision, &primesGenVec::eratosthenesSieve, &primesGenVec::eulerSieve,
-				         &primesGenVec::sundaramSieve, &primesGenVec::incrementalSieve} {
+				  pMethods{&primesGenVec::trialDivision, &primesGenVec::eratosthenesSieve, &primesGenVec::eulerSieve,
+				           &primesGenVec::sundaramSieve, &primesGenVec::incrementalSieve} {
 			pCustomMethods = nullptr;
 		}
 
@@ -680,10 +684,12 @@ namespace findPrimes {
 			};
 
 			if (uL >= 2) {
-				processNumber(2);
+				primes.push_back(2);
+				mp.push_back(4);
 			}
 			if (uL >= 3) {
-				processNumber(3);
+				primes.push_back(3);
+				mp.push_back(9);
 			}
 			for (unsigned long long i = 5; i <= uL; i += 6) {
 				processNumber(i);
@@ -705,7 +711,8 @@ namespace findPrimes {
 		primesGenSeg::primesGenSeg(const unsigned long long int &l, const unsigned long long int &u,
 		                           const std::vector<unsigned long long int> &pSP, const unsigned int &m,
 		                           const std::string &f) : primesGen(u, m, f),
-				pMethods{nullptr, &primesGenSeg::eratosthenesSieve, nullptr, &primesGenSeg::sundaramSieve, nullptr} {
+		                                                   pMethods{nullptr, &primesGenSeg::eratosthenesSieve, nullptr,
+		                                                            &primesGenSeg::sundaramSieve, nullptr} {
 			preSievedPrimes = pSP;
 			lL = l;
 			pCustomMethods = nullptr;
@@ -740,8 +747,8 @@ namespace findPrimes {
 			} else {
 				std::vector<bool> isPrime(uL - lL + 1, true);
 				for (auto prime: preSievedPrimes) {
-					unsigned long long firstMultiple = std::max(prime * prime, (lL + prime - 1) / prime * prime);
-					for (unsigned long long j = firstMultiple; j <= uL; j += prime) {
+					unsigned long long i = std::max(prime * prime, (lL + prime - 1) / prime * prime);
+					for (unsigned long long j = i; j <= uL; j += prime) {
 						isPrime[j - lL] = false;
 					}
 				}
@@ -922,9 +929,11 @@ namespace findPrimes {
 		primesGenVecSeg::primesGenVecSeg(const unsigned long long int &l, const unsigned long long int &u,
 		                                 const std::vector<unsigned long long int> &pSP, const unsigned int &m,
 		                                 const std::string &f) : primesGen(u, m, f), primesGenVec(u, m, f),
-				pMethods{&primesGenVecSeg::trialDivision, &primesGenVecSeg::eratosthenesSieve,
-				         &primesGenVecSeg::eulerSieve, &primesGenVecSeg::sundaramSieve,
-				         &primesGenVecSeg::incrementalSieve} {
+		                                                         pMethods{&primesGenVecSeg::trialDivision,
+		                                                                  &primesGenVecSeg::eratosthenesSieve,
+		                                                                  &primesGenVecSeg::eulerSieve,
+		                                                                  &primesGenVecSeg::sundaramSieve,
+		                                                                  &primesGenVecSeg::incrementalSieve} {
 			lL = l;
 			preSievedPrimes = pSP;
 			pCustomMethods = nullptr;
