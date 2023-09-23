@@ -502,7 +502,7 @@ namespace findPrimes {
 				if (uL >= 3) {
 					ofs << 3 << ' ';
 				}
-				unsigned long long k = uL + 1;
+				const unsigned long long k = uL + 1;
 				std::vector<bool> isPrime(k, true);
 
 				auto markMultiples = [&isPrime, &k](unsigned long long i) {
@@ -529,12 +529,12 @@ namespace findPrimes {
 			if (!ofs.is_open()) {
 				throw std::runtime_error("Failed to open file.");
 			} else {
-				unsigned long long k = (uL - 1) / 2;
+				const unsigned long long k = (uL - 1) / 2;
 				std::vector<bool> isPrime(k + 1, true);
 
 				unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * k) - 1) / 2) + 1;
 				for (unsigned long long i = 1; i <= h; ++i) {
-					unsigned long long p = 2 * i + 1;
+					const unsigned long long p = 2 * i + 1;
 					for (unsigned long long j = 2 * i + 2 * i * i; j <= k; j += p) {
 						isPrime[j] = false;
 					}
@@ -601,7 +601,7 @@ namespace findPrimes {
 			if (uL >= 3) {
 				primes.push_back(3);
 			}
-			unsigned long long k = uL + 1;
+			const unsigned long long k = uL + 1;
 			std::vector<bool> isPrime(k, true);
 
 			auto markMultiples = [&isPrime, &k](unsigned long long i) {
@@ -638,12 +638,12 @@ namespace findPrimes {
 		}
 
 		void primesGenVec::sundaramSieve() {
-			unsigned long long k = (uL - 1) / 2;
+			const unsigned long long k = (uL - 1) / 2;
 			std::vector<bool> isPrime(k + 1, true);
 
 			unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * k) - 1) / 2) + 1;
 			for (unsigned long long i = 1; i <= h; ++i) {
-				unsigned long long p = 2 * i + 1;
+				const unsigned long long p = 2 * i + 1;
 				for (unsigned long long j = 2 * i + 2 * i * i; j <= k; j += p) {
 					isPrime[j] = false;
 				}
@@ -664,7 +664,7 @@ namespace findPrimes {
 
 			auto processNumber = [this, &mp](unsigned long long i) {
 				bool flag = true;
-				unsigned long long limit = sqrt(i);
+				const unsigned long long limit = sqrt(i);
 				for (unsigned long long k = 0; k < primes.size(); ++k) {
 					if (primes[k] > limit) {
 						break;
@@ -747,8 +747,8 @@ namespace findPrimes {
 			} else {
 				std::vector<bool> isPrime(uL - lL + 1, true);
 				for (auto prime: preSievedPrimes) {
-					unsigned long long i = std::max(prime * prime, (lL + prime - 1) / prime * prime);
-					for (unsigned long long j = i; j <= uL; j += prime) {
+					const unsigned long long firstMultiple = std::max(prime * prime, (lL + prime - 1) / prime * prime);
+					for (unsigned long long j = firstMultiple; j <= uL; j += prime) {
 						isPrime[j - lL] = false;
 					}
 				}
@@ -765,29 +765,18 @@ namespace findPrimes {
 			if (!ofs.is_open()) {
 				throw std::runtime_error("Failed to open file.");
 			} else {
-				unsigned long long newLL = (lL + 1) / 2;
-				unsigned long long newUL = (uL - 1) / 2;
+				const unsigned long long &nNew = (uL - 1) / 2;
+				std::vector<bool> isPrime(nNew + 1, true);
 
-				std::vector<bool> isPrime(newUL - newLL + 1, true);
 
-				unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * newUL) - 1) / 2) + 1;
-
-				for (unsigned long long i = 1; i <= h; ++i) {
-					for (unsigned long long j = i; j <= 2 * (newUL - i) / (2 * i + 1); ++j) {
-						unsigned long long index = i + j + 2 * i * j;
-						if (index >= newLL && index <= newUL) {
-							isPrime[index - newLL] = false;
-						}
+				for (unsigned long long i = 1; i <= nNew; ++i) {
+					for (unsigned long long j = i; (i + j + 2 * i * j) <= nNew; ++j) {
+						isPrime[i + j + 2 * i * j] = false;
 					}
 				}
-
-				if (2 >= lL && 2 <= uL) {
-					ofs << 2 << ' ';
-				}
-
-				for (unsigned long long i = 0; i <= newUL - newLL; ++i) {
+				for (unsigned long long i = std::max(lL / 2, 1ULL); i <= nNew; ++i) {
 					if (isPrime[i]) {
-						ofs << (2 * (i + newLL) + 1) << ' ';
+						ofs << (2 * i + 1) << ' ';
 					}
 				}
 			}
@@ -820,7 +809,7 @@ namespace findPrimes {
 		void primesGenVecSeg::eratosthenesSieve() {
 			std::vector<bool> isPrime(uL - lL + 1, true);
 			for (auto prime: preSievedPrimes) {
-				unsigned long long firstMultiple = std::max(prime * prime, (lL + prime - 1) / prime * prime);
+				const unsigned long long firstMultiple = std::max(prime * prime, (lL + prime - 1) / prime * prime);
 				for (unsigned long long j = firstMultiple; j <= uL; j += prime) {
 					isPrime[j - lL] = false;
 				}
@@ -856,29 +845,17 @@ namespace findPrimes {
 		}
 
 		void primesGenVecSeg::sundaramSieve() {
-			unsigned long long newLL = (lL + 1) / 2;
-			unsigned long long newUL = (uL - 1) / 2;
+			const long long &nNew = (uL - 1) / 2;
+			std::vector<bool> isPrime(nNew + 1, true);
 
-			std::vector<bool> isPrime(newUL - newLL + 1, true);
-
-			unsigned long long h = (unsigned long long) ((sqrt(1 + 2 * newUL) - 1) / 2) + 1;
-
-			for (unsigned long long i = 1; i <= h; ++i) {
-				for (unsigned long long j = i; j <= 2 * (newUL - i) / (2 * i + 1); ++j) {
-					unsigned long long index = i + j + 2 * i * j;
-					if (index >= newLL && index <= newUL) {
-						isPrime[index - newLL] = false;
-					}
+			for (long long i = 1; i <= nNew; ++i) {
+				for (long long j = i; (i + j + 2 * i * j) <= nNew; ++j) {
+					isPrime[i + j + 2 * i * j] = false;
 				}
 			}
-
-			if (2 >= lL && 2 <= uL) {
-				primes.push_back(2);
-			}
-
-			for (unsigned long long i = 0; i <= newUL - newLL; ++i) {
+			for (long long i = std::max(lL / 2, 1ULL); i <= nNew; ++i) {
 				if (isPrime[i]) {
-					primes.push_back(2 * (i + newLL) + 1);
+					primes.push_back(2 * i + 1);
 				}
 			}
 		}
@@ -886,7 +863,6 @@ namespace findPrimes {
 		void primesGenVecSeg::incrementalSieve() {
 			primes = preSievedPrimes;
 			std::vector<unsigned long long> mp(primes.size());
-			std::vector<unsigned long long> results;
 
 			// Initialize the multiples of pre-sieved primes
 			for (unsigned long long k = 0; k < primes.size(); ++k) {
@@ -895,7 +871,7 @@ namespace findPrimes {
 
 			for (unsigned long long i = lL; i <= uL; ++i) {
 				bool isPrime = true;
-				unsigned long long limit = sqrt(i);
+				const unsigned long long limit = sqrt(i);
 				for (unsigned long long k = 0; k < primes.size(); ++k) {
 					if (primes[k] > limit) {
 						break;
@@ -910,11 +886,10 @@ namespace findPrimes {
 				}
 				if (isPrime) {
 					primes.push_back(i);
-					results.push_back(i);
 					mp.push_back(i * i);
 				}
 			}
-			primes = results;
+			primes.erase(primes.cbegin(), primes.cbegin() + preSievedPrimes.size());
 		}
 
 		void primesGenVecSeg::run() {
