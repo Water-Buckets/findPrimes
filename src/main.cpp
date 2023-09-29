@@ -128,21 +128,14 @@ int main(int argc, char *argv[]) {
 
 		delete preSievedPrimes;
 
-		for (auto &thr: *vThread) {
-			if (thr.joinable()) {
-				thr.join();
-			}
-		}
-
 		auto end = std::chrono::steady_clock::now();
 		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
 
-		delete vThread;
-
 		auto startCombine = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < threads; ++i) {
+			(*vThread)[i].join();
 			std::string fileName = ".temp+" + std::to_string(i) + "+" + file;
 			std::ifstream ifs(fileName);
 			unsigned long long temp;
@@ -223,12 +216,6 @@ int main(int argc, char *argv[]) {
 		std::cout << "Time elapsed writing pre-sieved results to file: " << double(durationWritePre) / 1000000000
 		          << " seconds." << std::endl;
 
-		for (auto &thr: vThread) {
-			if (thr.joinable()) {
-				thr.join();
-			}
-		}
-
 		auto end = std::chrono::steady_clock::now();
 		long long duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 		std::cout << "Time elapsed sieving: " << double(duration) / 1000000000 << " seconds." << std::endl;
@@ -236,6 +223,7 @@ int main(int argc, char *argv[]) {
 		auto startWrite = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < threads; ++i) {
+			vThread[i].join();
 			results[i]->output(ofs);
 			delete results[i];
 			std::filesystem::remove(".temp+" + std::to_string(i) + "+" + file);
