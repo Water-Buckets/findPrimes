@@ -459,8 +459,7 @@ namespace findPrimes {
 		}
 	} // namespace v1
 
-// v2 with better performace
-	inline namespace v2 {
+	inline namespace v2 {// v2 with better performace
 
 		primesGen::primesGen(const unsigned long long int &u, const unsigned int &m, const std::string &f) : pMethods{
 				nullptr, &primesGen::eratosthenesSieve, nullptr, &primesGen::sundaramSieve, nullptr} {
